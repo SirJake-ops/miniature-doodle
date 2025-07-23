@@ -1,0 +1,6 @@
+{
+  "BackendTrackerApplication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\jake2\\RiderProjects\\BackendTracker\\BackendTrackerApplication",
+  "BackendTrackerDomain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\jake2\\RiderProjects\\BackendTracker\\BackendTrackerDomain",
+  "BackendTrackerInfrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\jake2\\RiderProjects\\BackendTracker\\BackendTrackerInfrastructure",
+  "BackendTrackerPresentation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\jake2\\RiderProjects\\BackendTracker\\BackendTracker"
+}

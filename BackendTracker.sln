@@ -1,0 +1,65 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36221.1 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackendTrackerPresentation", "BackendTracker\BackendTrackerPresentation.csproj", "{F41C5D05-0D96-4162-A10A-BC1488A0F67E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9F9DBF78-69D6-4E2B-80B5-F709995990B0} = {9F9DBF78-69D6-4E2B-80B5-F709995990B0}
+		{FBBF2F06-6B9A-431D-B756-2F62A762D8A7} = {FBBF2F06-6B9A-431D-B756-2F62A762D8A7}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6170BE42-0930-4AF4-91BD-3089707EEF8B}"
+	ProjectSection(SolutionItems) = preProject
+		.env = .env
+		compose.yaml = compose.yaml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackendTrackerTest", "BackendTrackerTest\BackendTrackerTest.csproj", "{6C4BADEC-B17E-4149-A9CF-C56710042015}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackendTrackerDomain", "BackendTrackerDomain\BackendTrackerDomain.csproj", "{FBBF2F06-6B9A-431D-B756-2F62A762D8A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackendTrackerApplication", "BackendTrackerApplication\BackendTrackerApplication.csproj", "{9F9DBF78-69D6-4E2B-80B5-F709995990B0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FBBF2F06-6B9A-431D-B756-2F62A762D8A7} = {FBBF2F06-6B9A-431D-B756-2F62A762D8A7}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackendTrackerInfrastructure", "BackendTrackerInfrastructure\BackendTrackerInfrastructure.csproj", "{5D2497DD-958B-4410-900D-52DEA0CB135B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FBBF2F06-6B9A-431D-B756-2F62A762D8A7} = {FBBF2F06-6B9A-431D-B756-2F62A762D8A7}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F41C5D05-0D96-4162-A10A-BC1488A0F67E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F41C5D05-0D96-4162-A10A-BC1488A0F67E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F41C5D05-0D96-4162-A10A-BC1488A0F67E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F41C5D05-0D96-4162-A10A-BC1488A0F67E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C4BADEC-B17E-4149-A9CF-C56710042015}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C4BADEC-B17E-4149-A9CF-C56710042015}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C4BADEC-B17E-4149-A9CF-C56710042015}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C4BADEC-B17E-4149-A9CF-C56710042015}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBBF2F06-6B9A-431D-B756-2F62A762D8A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBBF2F06-6B9A-431D-B756-2F62A762D8A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBBF2F06-6B9A-431D-B756-2F62A762D8A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBBF2F06-6B9A-431D-B756-2F62A762D8A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F9DBF78-69D6-4E2B-80B5-F709995990B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F9DBF78-69D6-4E2B-80B5-F709995990B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F9DBF78-69D6-4E2B-80B5-F709995990B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F9DBF78-69D6-4E2B-80B5-F709995990B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D2497DD-958B-4410-900D-52DEA0CB135B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D2497DD-958B-4410-900D-52DEA0CB135B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D2497DD-958B-4410-900D-52DEA0CB135B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D2497DD-958B-4410-900D-52DEA0CB135B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B951911A-315C-41AC-A604-42A3E8F91501}
+	EndGlobalSection
+EndGlobal

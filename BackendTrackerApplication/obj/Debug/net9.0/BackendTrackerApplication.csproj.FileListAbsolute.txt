@@ -1,0 +1,16 @@
+C:\Users\jake2\RiderProjects\BackendTracker\BackendTrackerApplication\bin\Debug\net9.0\BackendTrackerApplication.deps.json
+C:\Users\jake2\RiderProjects\BackendTracker\BackendTrackerApplication\bin\Debug\net9.0\BackendTrackerApplication.dll
+C:\Users\jake2\RiderProjects\BackendTracker\BackendTrackerApplication\bin\Debug\net9.0\BackendTrackerApplication.pdb
+C:\Users\jake2\RiderProjects\BackendTracker\BackendTrackerApplication\bin\Debug\net9.0\BackendTrackerDomain.dll
+C:\Users\jake2\RiderProjects\BackendTracker\BackendTrackerApplication\bin\Debug\net9.0\BackendTrackerDomain.pdb
+C:\Users\jake2\RiderProjects\BackendTracker\BackendTrackerApplication\obj\Debug\net9.0\BackendTrackerApplication.csproj.AssemblyReference.cache
+C:\Users\jake2\RiderProjects\BackendTracker\BackendTrackerApplication\obj\Debug\net9.0\BackendTrackerApplication.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jake2\RiderProjects\BackendTracker\BackendTrackerApplication\obj\Debug\net9.0\BackendTrackerApplication.AssemblyInfoInputs.cache
+C:\Users\jake2\RiderProjects\BackendTracker\BackendTrackerApplication\obj\Debug\net9.0\BackendTrackerApplication.AssemblyInfo.cs
+C:\Users\jake2\RiderProjects\BackendTracker\BackendTrackerApplication\obj\Debug\net9.0\BackendTrackerApplication.csproj.CoreCompileInputs.cache
+C:\Users\jake2\RiderProjects\BackendTracker\BackendTrackerApplication\obj\Debug\net9.0\BackendTrackerApplication.sourcelink.json
+C:\Users\jake2\RiderProjects\BackendTracker\BackendTrackerApplication\obj\Debug\net9.0\BackendT.4E0F6294.Up2Date
+C:\Users\jake2\RiderProjects\BackendTracker\BackendTrackerApplication\obj\Debug\net9.0\BackendTrackerApplication.dll
+C:\Users\jake2\RiderProjects\BackendTracker\BackendTrackerApplication\obj\Debug\net9.0\refint\BackendTrackerApplication.dll
+C:\Users\jake2\RiderProjects\BackendTracker\BackendTrackerApplication\obj\Debug\net9.0\BackendTrackerApplication.pdb
+C:\Users\jake2\RiderProjects\BackendTracker\BackendTrackerApplication\obj\Debug\net9.0\ref\BackendTrackerApplication.dll

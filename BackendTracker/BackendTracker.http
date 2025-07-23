@@ -1,0 +1,11 @@
+@BackendTracker_HostAddress = http://localhost:5176
+
+GET {{BackendTracker_HostAddress}}/todos/
+Accept: application/json
+
+###
+
+GET {{BackendTracker_HostAddress}}/todos/1
+Accept: application/json
+
+###
