@@ -53,17 +53,28 @@ public class Mutation(IDbContextFactory<ApplicationContext> dbContextFactory)
     public async Task<Message> AddMessage(Message message, [Service] ITopicEventSender sender)
     {
         await using var context = await dbContextFactory.CreateDbContextAsync();
-        try
-        {
-            context.Messages.Add(message);
-            await context.SaveChangesAsync();
+        var user = await context.ApplicationUsers.FirstOrDefaultAsync(m => m.Id == message.SenderId)
+                   ?? throw new UserNotFoundGraphql("User not found for adding creating a message");
+        user.Messages.Add(message);
+        context.Messages.Add(message);
+        await context.SaveChangesAsync();
 
-            await sender.SendAsync(nameof(Subscription.MessageAdded), message);
-            return message;
-        }
-        catch (Exception e)
-        {
-            throw new MessageNotSentException("Messavge could not be sent: " + e.Message);
-        }
+        await sender.SendAsync(nameof(Subscription.MessageAdded), message);
+        return message;
+    }
+
+    public async Task<Conversation> AddConversation(Conversation conversation, [Service] ITopicEventSender sender)
+    {
+        await using var context = await dbContextFactory.CreateDbContextAsync();
+        
+        var user = await context.ApplicationUsers.FirstOrDefaultAsync(m => m.Id == conversation.InitialSenderId)
+                   ?? throw new UserNotFoundGraphql("User not found for adding creating a conversation");
+        
+        user.Conversations.Add(conversation);
+        context.Conversations.Add(conversation);
+        await context.SaveChangesAsync();
+        
+        await sender.SendAsync(nameof(Subscription.ConversationAdded), conversation);
+        return conversation;
     }
 }

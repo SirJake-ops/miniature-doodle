@@ -75,7 +75,7 @@ public class QueryTest : IClassFixture<QueryTestFixture>
     }
 
     [Fact]
-    public async void GetUser_ShouldReturnSingleUser()
+    public async Task GetUser_ShouldReturnSingleUser()
     {
         var query = new Query(_contextFactory);
         var userSearchInput = new UserSearchInput

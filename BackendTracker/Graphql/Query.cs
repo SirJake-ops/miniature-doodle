@@ -8,31 +8,28 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BackendTrackerPresentation.Graphql;
 
-/**
- * TODO: Move the methods that are altering data to a new Mutation class Below
- */
 public class Query(IDbContextFactory<ApplicationContext> dbContextFactory)
 {
-    private readonly ApplicationContext context = dbContextFactory.CreateDbContext();
+    private readonly ApplicationContext _context = dbContextFactory.CreateDbContext();
 
     public string Hello() => "Hello From Graph";
 
     [Authorize]
     public async Task<IEnumerable<Conversation>> GetConversations(Guid userId) =>
-        await context.Conversations
+        await _context.Conversations
             .Where(m => m.Id == userId)
             .AsNoTracking()
             .ToListAsync();
 
     public async Task<ApplicationUser?> GetUser(UserSearchInput searchInput) =>
-        await context.ApplicationUsers
+        await _context.ApplicationUsers
             .Where(m => m.UserName == searchInput.UserName
                         && m.Email == searchInput.UserEmail)
             .FirstOrDefaultAsync();
 
     [Authorize]
     public async Task<IEnumerable<Message>> GetMessagesUser(Guid userId) =>
-        await context.Messages
+        await _context.Messages
             .Where(m => m.Id == userId)
             .AsNoTracking()
             .ToListAsync();
