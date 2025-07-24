@@ -1,11 +1,12 @@
 ﻿using BackendTracker.Entities.Message;
-using BackendTracker.Graphql.GraphqlTypes;
 using BackendTrackerDomain.Entity.ApplicationUser;
+using BackendTrackerDomain.Entity.Message;
 using BackendTrackerInfrastructure.Persistence.Context;
+using BackendTrackerPresentation.Graphql.GraphqlTypes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
-namespace BackendTrackerInfrastructure.Graphql;
+namespace BackendTrackerPresentation.Graphql;
 
 /**
  * TODO: Move the methods that are altering data to a new Mutation class Below

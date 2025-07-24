@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using BackendTracker.Entities;
 
-namespace BackendTracker.Entities.Message;
+namespace BackendTrackerDomain.Entity.Message;
 
 public class Message : BaseEntity
 {

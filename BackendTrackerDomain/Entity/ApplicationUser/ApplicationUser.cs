@@ -19,9 +19,9 @@ public class ApplicationUser : BaseEntity
     [DataType(DataType.Password)]
     public string? Password { get; set; }
 
-    [MaxLength(50)] public string? Role { get; set; }
+    [MaxLength(50)] public string? Role { get; set; } = nameof(BackendTracker.Ticket.Enums.Role.User);
 
-    public required List<BackendTracker.Entities.Message.Message> Messages { get; set; } = new List<Message>();
+    public required List<Message.Message> Messages { get; set; } = new List<Message.Message>();
 
     public required List<Conversation> Conversations { get; set; } = new List<Conversation>();
 

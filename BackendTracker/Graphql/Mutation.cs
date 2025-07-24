@@ -1,11 +1,16 @@
 ﻿using BackendTracker.Entities.Message;
-using BackendTracker.GraphQueries.GraphqlTypes;
+using BackendTracker.Ticket.Enums;
 using BackendTrackerDomain.Entity.ApplicationUser;
+using BackendTrackerDomain.Entity.Message;
 using BackendTrackerInfrastructure.Persistence.Context;
+using BackendTrackerPresentation.Exceptions;
+using BackendTrackerPresentation.Graphql.GraphqlTypes;
+using BackendTrackerPresentation.Graphql.Subscriptions;
+using HotChocolate.Subscriptions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace BackendTrackerInfrastructure.Graphql;
+namespace BackendTrackerPresentation.Graphql;
 
 public class Mutation(IDbContextFactory<ApplicationContext> dbContextFactory)
 {
@@ -21,7 +26,7 @@ public class Mutation(IDbContextFactory<ApplicationContext> dbContextFactory)
                 Id = Guid.NewGuid(),
                 UserName = user.UserName,
                 Email = user.Email,
-                Role = user.Role ?? "User",
+                Role = user.Role,
                 RefreshToken = "",
                 RefreshTokenExpiryTime = DateTime.Now.AddHours(24)
                     .ToUniversalTime(),
@@ -42,6 +47,23 @@ public class Mutation(IDbContextFactory<ApplicationContext> dbContextFactory)
         {
             Console.WriteLine(e);
             throw;
+        }
+    }
+
+    public async Task<Message> AddMessage(Message message, [Service] ITopicEventSender sender)
+    {
+        await using var context = await dbContextFactory.CreateDbContextAsync();
+        try
+        {
+            context.Messages.Add(message);
+            await context.SaveChangesAsync();
+
+            await sender.SendAsync(nameof(Subscription.MessageAdded), message);
+            return message;
+        }
+        catch (Exception e)
+        {
+            throw new MessageNotSentException("Messavge could not be sent: " + e.Message);
         }
     }
 }

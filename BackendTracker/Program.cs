@@ -1,14 +1,16 @@
+using System.Text;
 using BackendTracker.Entities.Message;
 using BackendTrackerApplication.Services;
+using BackendTrackerDomain.Entity.Message;
 using BackendTrackerDomain.Interfaces;
-using BackendTrackerInfrastructure.Graphql;
 using BackendTrackerInfrastructure.Persistence.Context;
+using BackendTrackerInfrastructure.Repositories;
+using BackendTrackerPresentation.Graphql;
+using BackendTrackerPresentation.Graphql.Subscriptions;
 using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using BackendTrackerInfrastructure.Repositories;
 using Environment = System.Environment;
 
 namespace BackendTrackerPresentation;
@@ -28,7 +30,8 @@ public class Program
             .AddQueryType<Query>()
             .AddMutationType<Mutation>()
             .AddType<Message>()
-            .AddType<Conversation>();
+            .AddType<Conversation>()
+            .AddSubscriptionType<Subscription>();
 
         builder.Services.AddScoped<ITicketRepository, TicketRepository>();
         builder.Services.AddScoped<TicketService>();
@@ -51,7 +54,7 @@ public class Program
         builder.Services.AddControllers();
         builder.Services.AddControllers().AddNewtonsoftJson();
         builder.Services.AddAuthorization();
-        
+
 
         var app = builder.Build();
 

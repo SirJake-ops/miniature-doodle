@@ -1,4 +1,4 @@
-﻿namespace BackendTracker.GraphQueries.GraphqlTypes;
+﻿namespace BackendTrackerPresentation.Graphql.GraphqlTypes;
 
 public class ApplicationUserInput
 {

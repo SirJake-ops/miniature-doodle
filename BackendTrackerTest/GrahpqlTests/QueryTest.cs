@@ -1,8 +1,9 @@
 ﻿using BackendTracker.Entities.Message;
-using BackendTracker.Graphql.GraphqlTypes;
 using BackendTrackerDomain.Entity.ApplicationUser;
-using BackendTrackerInfrastructure.Graphql;
+using BackendTrackerDomain.Entity.Message;
 using BackendTrackerInfrastructure.Persistence.Context;
+using BackendTrackerPresentation.Graphql;
+using BackendTrackerPresentation.Graphql.GraphqlTypes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

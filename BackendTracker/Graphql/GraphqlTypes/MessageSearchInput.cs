@@ -1,4 +1,4 @@
-﻿namespace BackendTracker.Graphql.GraphqlTypes;
+﻿namespace BackendTrackerPresentation.Graphql.GraphqlTypes;
 
 public class MessageSearchInput
 {
