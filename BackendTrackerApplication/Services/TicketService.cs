@@ -1,21 +1,19 @@
 ﻿using BackendTracker.Ticket.NewFolder;
 using BackendTrackerApplication.DTOs;
-using BackendTrackerDomain.Entity.ApplicationUser;
+using BackendTrackerApplication.Exceptions;
 using BackendTrackerDomain.Entity.Ticket;
 using BackendTrackerDomain.Entity.Ticket.FileUpload;
 using BackendTrackerDomain.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System.Reflection;
-using BackendTrackerApplication.Exceptions;
-using GreenDonut;
-using Microsoft.AspNetCore.Mvc;
 
 namespace BackendTrackerApplication.Services;
 
-public class TicketService(ITicketRepository _ticketRepository, ILogger<TicketService> logger)
+public class TicketService(
+    ITicketRepository _ticketRepository,
+    IApplicationUserRepository _applicationUserRepository,
+    ILogger<TicketService> logger)
 {
-    public async Task<IEnumerable<BackendTrackerDomain.Entity.Ticket.Ticket>> GetTickets(Guid submitterId)
+    public async Task<IEnumerable<Ticket>> GetTickets(Guid submitterId)
     {
         if (submitterId == Guid.Empty)
         {
@@ -35,6 +33,9 @@ public class TicketService(ITicketRepository _ticketRepository, ILogger<TicketSe
         if (!userExists)
             throw new UserNotFoundException(request.SubmitterId.ToString(), new Dictionary<string, string[]>());
 
+        var user = await _applicationUserRepository.GetUserByIdAsync(request.SubmitterId) ??
+                   throw new UserNotFoundException("User not found", new Dictionary<string, string[]>());
+
         var ticket = new Ticket
         {
             TicketId = Guid.NewGuid(),
@@ -48,7 +49,7 @@ public class TicketService(ITicketRepository _ticketRepository, ILogger<TicketSe
             UpdatedAt = DateTime.UtcNow,
             Files = request.Files ?? new List<TicketFile>(),
             IsResolved = false,
-            Submitter = null,
+            Submitter = user,
             Assignee = null,
             AssigneeId = null
         };

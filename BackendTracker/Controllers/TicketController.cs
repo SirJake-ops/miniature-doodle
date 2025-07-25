@@ -31,13 +31,6 @@ public class TicketController(TicketService ticketService) : Controller
     {
         return await ticketService.UpdateTicket(ticketBody);
     }
-    //
-    // [HttpPatch("{ticketId}")]
-    // [Authorize]
-    // public async Task<TicketResponse> UpdateTicketProp([FromBody] Dictionary<string, object> propertyToUpdate, Guid ticketId)
-    // {
-    //     return await ticketService.UpdateTicketProp(propertyToUpdate, ticketId);
-    // }
 
     [HttpDelete("{ticketId}")]
     [Authorize]

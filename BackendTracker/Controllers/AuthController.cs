@@ -7,7 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using BackendTrackerInfrastructure.Authentication;
+using BackendTrackerApplication.Dtos;
 using LoginRequest = BackendTracker.Auth.LoginRequest;
 
 namespace BackendTrackerPresentation.Controllers;
@@ -35,7 +35,12 @@ public class AuthController(IDbContextFactory<ApplicationContext> applicationCon
         return Ok(new AuthResponse
         {
             Token = token,
-            User = user
+            User = new ApplicationUserDto
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                Email = user.Email,
+            } 
         });
     }
 

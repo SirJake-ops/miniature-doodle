@@ -9,7 +9,7 @@ namespace BackendTrackerInfrastructure.Repositories;
 
 public class TicketRepository(IDbContextFactory<ApplicationContext> _contextFactory) : ITicketRepository
 {
-    public async Task<IEnumerable<BackendTrackerDomain.Entity.Ticket.Ticket>> GetTickets(Guid submitterId)
+    public async Task<IEnumerable<Ticket>> GetTickets(Guid submitterId)
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
         return await context.Tickets
@@ -17,14 +17,14 @@ public class TicketRepository(IDbContextFactory<ApplicationContext> _contextFact
             .ToListAsync();
     }
 
-    public async Task<BackendTrackerDomain.Entity.Ticket.Ticket?> GetTicketById(Guid ticketId)
+    public async Task<Ticket?> GetTicketById(Guid ticketId)
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
         return await context.Tickets.FirstOrDefaultAsync(m => m.TicketId == ticketId);
     }
 
-    public async Task<BackendTrackerDomain.Entity.Ticket.Ticket> CreateTicket(
-        BackendTrackerDomain.Entity.Ticket.Ticket ticket)
+    public async Task<Ticket> CreateTicket(
+        Ticket ticket)
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
         context.Tickets.Add(ticket);
@@ -32,8 +32,8 @@ public class TicketRepository(IDbContextFactory<ApplicationContext> _contextFact
         return ticket;
     }
 
-    public async Task<BackendTrackerDomain.Entity.Ticket.Ticket> UpdateTicket(
-        BackendTrackerDomain.Entity.Ticket.Ticket ticket)
+    public async Task<Ticket> UpdateTicket(
+        Ticket ticket)
     {
         await using var context = await _contextFactory.CreateDbContextAsync();
         context.Tickets.Update(ticket);

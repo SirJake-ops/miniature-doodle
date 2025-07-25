@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "IjOZQaEpH/4=",
+  "dgSpecHash": "RSCdhaX7QkQ=",
   "success": true,
   "projectFilePath": "C:\\Users\\jake2\\RiderProjects\\BackendTracker\\BackendTrackerTest\\BackendTrackerTest.csproj",
   "expectedPackageFiles": [
@@ -61,7 +61,8 @@
     "C:\\Users\\jake2\\.nuget\\packages\\microsoft.aspnetcore.authorization\\2.3.0\\microsoft.aspnetcore.authorization.2.3.0.nupkg.sha512",
     "C:\\Users\\jake2\\.nuget\\packages\\microsoft.aspnetcore.authorization.policy\\2.3.0\\microsoft.aspnetcore.authorization.policy.2.3.0.nupkg.sha512",
     "C:\\Users\\jake2\\.nuget\\packages\\microsoft.aspnetcore.cors\\2.3.0\\microsoft.aspnetcore.cors.2.3.0.nupkg.sha512",
-    "C:\\Users\\jake2\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\2.3.0\\microsoft.aspnetcore.cryptography.internal.2.3.0.nupkg.sha512",
+    "C:\\Users\\jake2\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\9.0.7\\microsoft.aspnetcore.cryptography.internal.9.0.7.nupkg.sha512",
+    "C:\\Users\\jake2\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\9.0.7\\microsoft.aspnetcore.cryptography.keyderivation.9.0.7.nupkg.sha512",
     "C:\\Users\\jake2\\.nuget\\packages\\microsoft.aspnetcore.dataprotection\\2.3.0\\microsoft.aspnetcore.dataprotection.2.3.0.nupkg.sha512",
     "C:\\Users\\jake2\\.nuget\\packages\\microsoft.aspnetcore.dataprotection.abstractions\\2.3.0\\microsoft.aspnetcore.dataprotection.abstractions.2.3.0.nupkg.sha512",
     "C:\\Users\\jake2\\.nuget\\packages\\microsoft.aspnetcore.diagnostics.abstractions\\2.3.0\\microsoft.aspnetcore.diagnostics.abstractions.2.3.0.nupkg.sha512",
@@ -130,6 +131,7 @@
     "C:\\Users\\jake2\\.nuget\\packages\\microsoft.extensions.filesystemglobbing\\9.0.7\\microsoft.extensions.filesystemglobbing.9.0.7.nupkg.sha512",
     "C:\\Users\\jake2\\.nuget\\packages\\microsoft.extensions.hosting\\9.0.7\\microsoft.extensions.hosting.9.0.7.nupkg.sha512",
     "C:\\Users\\jake2\\.nuget\\packages\\microsoft.extensions.hosting.abstractions\\9.0.7\\microsoft.extensions.hosting.abstractions.9.0.7.nupkg.sha512",
+    "C:\\Users\\jake2\\.nuget\\packages\\microsoft.extensions.identity.core\\9.0.7\\microsoft.extensions.identity.core.9.0.7.nupkg.sha512",
     "C:\\Users\\jake2\\.nuget\\packages\\microsoft.extensions.localization\\8.0.11\\microsoft.extensions.localization.8.0.11.nupkg.sha512",
     "C:\\Users\\jake2\\.nuget\\packages\\microsoft.extensions.localization.abstractions\\8.0.11\\microsoft.extensions.localization.abstractions.8.0.11.nupkg.sha512",
     "C:\\Users\\jake2\\.nuget\\packages\\microsoft.extensions.logging\\9.0.7\\microsoft.extensions.logging.9.0.7.nupkg.sha512",

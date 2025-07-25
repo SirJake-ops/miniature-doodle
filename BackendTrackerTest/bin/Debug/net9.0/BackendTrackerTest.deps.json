@@ -68,8 +68,6 @@
           "Microsoft.AspNetCore.Connections.Abstractions": "9.0.0.0",
           "Microsoft.AspNetCore.CookiePolicy": "9.0.0.0",
           "Microsoft.AspNetCore.Cors.Reference": "9.0.0.0",
-          "Microsoft.AspNetCore.Cryptography.Internal.Reference": "9.0.0.0",
-          "Microsoft.AspNetCore.Cryptography.KeyDerivation": "9.0.0.0",
           "Microsoft.AspNetCore.DataProtection.Abstractions.Reference": "9.0.0.0",
           "Microsoft.AspNetCore.DataProtection.Reference": "9.0.0.0",
           "Microsoft.AspNetCore.DataProtection.Extensions": "9.0.0.0",
@@ -147,7 +145,6 @@
           "Microsoft.Extensions.FileProviders.Composite.Reference": "9.0.0.0",
           "Microsoft.Extensions.FileProviders.Embedded": "9.0.0.0",
           "Microsoft.Extensions.Http": "9.0.0.0",
-          "Microsoft.Extensions.Identity.Core": "9.0.0.0",
           "Microsoft.Extensions.Identity.Stores": "9.0.0.0",
           "Microsoft.Extensions.Localization.Abstractions.Reference": "9.0.0.0",
           "Microsoft.Extensions.Localization.Reference": "9.0.0.0",
@@ -1115,10 +1112,34 @@
           "Microsoft.Extensions.Options": "9.0.7"
         }
       },
-      "Microsoft.AspNetCore.Cryptography.Internal/2.3.0": {},
+      "Microsoft.AspNetCore.Cryptography.Internal/9.0.7": {
+        "runtime": {
+          "lib/net9.0/Microsoft.AspNetCore.Cryptography.Internal.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.725.31702"
+          }
+        },
+        "compile": {
+          "lib/net9.0/Microsoft.AspNetCore.Cryptography.Internal.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Cryptography.KeyDerivation/9.0.7": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Cryptography.Internal": "9.0.7"
+        },
+        "runtime": {
+          "lib/net9.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.725.31702"
+          }
+        },
+        "compile": {
+          "lib/net9.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.DataProtection/2.3.0": {
         "dependencies": {
-          "Microsoft.AspNetCore.Cryptography.Internal": "2.3.0",
+          "Microsoft.AspNetCore.Cryptography.Internal": "9.0.7",
           "Microsoft.AspNetCore.DataProtection.Abstractions": "2.3.0",
           "Microsoft.AspNetCore.Hosting.Abstractions": "2.3.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.7",
@@ -1896,6 +1917,22 @@
         },
         "compile": {
           "lib/net9.0/Microsoft.Extensions.Hosting.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Identity.Core/9.0.7": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Cryptography.KeyDerivation": "9.0.7",
+          "Microsoft.Extensions.Logging": "9.0.7",
+          "Microsoft.Extensions.Options": "9.0.7"
+        },
+        "runtime": {
+          "lib/net9.0/Microsoft.Extensions.Identity.Core.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.725.31702"
+          }
+        },
+        "compile": {
+          "lib/net9.0/Microsoft.Extensions.Identity.Core.dll": {}
         }
       },
       "Microsoft.Extensions.Localization/8.0.11": {
@@ -3573,7 +3610,9 @@
           "Microsoft.EntityFrameworkCore": "9.0.7",
           "Microsoft.EntityFrameworkCore.InMemory": "9.0.7",
           "Microsoft.EntityFrameworkCore.Relational": "9.0.7",
-          "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.2"
+          "Microsoft.Extensions.Identity.Core": "9.0.7",
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.2",
+          "System.IdentityModel.Tokens.Jwt": "8.0.1"
         },
         "runtime": {
           "BackendTrackerInfrastructure.dll": {
@@ -3720,18 +3759,6 @@
       "Microsoft.AspNetCore.Cors.Reference/9.0.0.0": {
         "compile": {
           "Microsoft.AspNetCore.Cors.dll": {}
-        },
-        "compileOnly": true
-      },
-      "Microsoft.AspNetCore.Cryptography.Internal.Reference/9.0.0.0": {
-        "compile": {
-          "Microsoft.AspNetCore.Cryptography.Internal.dll": {}
-        },
-        "compileOnly": true
-      },
-      "Microsoft.AspNetCore.Cryptography.KeyDerivation/9.0.0.0": {
-        "compile": {
-          "Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": {}
         },
         "compileOnly": true
       },
@@ -4194,12 +4221,6 @@
       "Microsoft.Extensions.Http/9.0.0.0": {
         "compile": {
           "Microsoft.Extensions.Http.dll": {}
-        },
-        "compileOnly": true
-      },
-      "Microsoft.Extensions.Identity.Core/9.0.0.0": {
-        "compile": {
-          "Microsoft.Extensions.Identity.Core.dll": {}
         },
         "compileOnly": true
       },
@@ -5654,12 +5675,19 @@
       "path": "microsoft.aspnetcore.cors/2.3.0",
       "hashPath": "microsoft.aspnetcore.cors.2.3.0.nupkg.sha512"
     },
-    "Microsoft.AspNetCore.Cryptography.Internal/2.3.0": {
+    "Microsoft.AspNetCore.Cryptography.Internal/9.0.7": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-/qy5r0CD40OccajzDmX3gBfqqxpAJkcXoqlVz0YR70x3gTRq/VuseDU/lZ5eh8vM+KCdmPFAtyGcRWxTyXxuYg==",
-      "path": "microsoft.aspnetcore.cryptography.internal/2.3.0",
-      "hashPath": "microsoft.aspnetcore.cryptography.internal.2.3.0.nupkg.sha512"
+      "sha512": "sha512-5di3GKY/a9ceGAdVk78QFGMO55NrFRN1rnh4xNr7MHjOCOMhgcWkyv9051wkPUDfX+g2cNN6+ckHvNnlxUwc2A==",
+      "path": "microsoft.aspnetcore.cryptography.internal/9.0.7",
+      "hashPath": "microsoft.aspnetcore.cryptography.internal.9.0.7.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Cryptography.KeyDerivation/9.0.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-9ms7cTGHBzhCTfC8yIv9KfMrLKsRLg60jGsoZ/oEjoBXbqcEsXcjNtXqaOJCjpeltLDKoePrfSWzjhMUxTHHMA==",
+      "path": "microsoft.aspnetcore.cryptography.keyderivation/9.0.7",
+      "hashPath": "microsoft.aspnetcore.cryptography.keyderivation.9.0.7.nupkg.sha512"
     },
     "Microsoft.AspNetCore.DataProtection/2.3.0": {
       "type": "package",
@@ -6136,6 +6164,13 @@
       "sha512": "sha512-yG2JCXAR+VqI1mKqynLPNJlNlrUJeEISEpX4UznOp2uM4IEFz3pDDauzyMvTjICutEJtOigJ1yWBvxbaIlibBw==",
       "path": "microsoft.extensions.hosting.abstractions/9.0.7",
       "hashPath": "microsoft.extensions.hosting.abstractions.9.0.7.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Identity.Core/9.0.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-yFMK7yhLYbiwiiKOI/A1rReteRbO4vnN3SPNF5YpUHf6BvSMn5K1TDa7GVszJBH/VmxP0EAsHnSH05GEV0x3cg==",
+      "path": "microsoft.extensions.identity.core/9.0.7",
+      "hashPath": "microsoft.extensions.identity.core.9.0.7.nupkg.sha512"
     },
     "Microsoft.Extensions.Localization/8.0.11": {
       "type": "package",
@@ -7241,16 +7276,6 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Microsoft.AspNetCore.Cryptography.Internal.Reference/9.0.0.0": {
-      "type": "referenceassembly",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Microsoft.AspNetCore.Cryptography.KeyDerivation/9.0.0.0": {
-      "type": "referenceassembly",
-      "serviceable": false,
-      "sha512": ""
-    },
     "Microsoft.AspNetCore.DataProtection.Abstractions.Reference/9.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
@@ -7632,11 +7657,6 @@
       "sha512": ""
     },
     "Microsoft.Extensions.Http/9.0.0.0": {
-      "type": "referenceassembly",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Microsoft.Extensions.Identity.Core/9.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""

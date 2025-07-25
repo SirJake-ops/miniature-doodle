@@ -1,5 +1,6 @@
 using System.Text;
 using BackendTracker.Entities.Message;
+using BackendTrackerApplication.Interfaces;
 using BackendTrackerApplication.Services;
 using BackendTrackerDomain.Entity.Message;
 using BackendTrackerDomain.Interfaces;
@@ -8,6 +9,7 @@ using BackendTrackerInfrastructure.Repositories;
 using BackendTrackerPresentation.Graphql;
 using BackendTrackerPresentation.Graphql.Subscriptions;
 using DotNetEnv;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -34,6 +36,8 @@ public class Program
             .AddSubscriptionType<Subscription>();
 
         builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+        builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
+        builder.Services.AddScoped<IApplicationUserService, ApplicationUserService>();
         builder.Services.AddScoped<TicketService>();
         builder.Services.AddScoped<Mutation>();
         builder.Services.AddScoped<Query>();
