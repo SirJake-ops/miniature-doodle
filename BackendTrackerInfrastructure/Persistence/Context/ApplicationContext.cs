@@ -1,4 +1,5 @@
-﻿using BackendTracker.Entities.Message;
+﻿using System.Diagnostics;
+using BackendTracker.Entities.Message;
 using BackendTrackerDomain.Entity.ApplicationUser;
 using BackendTrackerDomain.Entity.Message;
 using BackendTrackerDomain.Entity.Ticket.FileUpload;
@@ -7,11 +8,8 @@ using Microsoft.EntityFrameworkCore;
 namespace BackendTrackerInfrastructure.Persistence.Context;
 
 
-public class ApplicationContext : DbContext
+public class ApplicationContext(DbContextOptions<ApplicationContext> options) : DbContext(options)
 {
-    public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
-    {
-    }
 #pragma warning restore IL3050
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

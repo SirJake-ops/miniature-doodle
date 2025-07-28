@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using BackendTrackerDomain.Entity;
 
 namespace BackendTracker.Entities.Audit;
 

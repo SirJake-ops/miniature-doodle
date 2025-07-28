@@ -10,10 +10,7 @@ public class BufferedFileUpload : PageModel
     [BindProperty] public BufferedFileUploadDb? FileUpload { get; set; }
 }
 
-
 public class BufferedFileUploadDb
 {
-    [Required]
-    [Display(Name="file")]
-    public IFormFile? File { get; set; }
+    [Required] [Display(Name = "file")] public IFormFile? File { get; set; }
 }

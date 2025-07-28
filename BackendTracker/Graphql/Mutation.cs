@@ -1,5 +1,4 @@
 ﻿using BackendTracker.Entities.Message;
-using BackendTracker.Ticket.Enums;
 using BackendTrackerDomain.Entity.ApplicationUser;
 using BackendTrackerDomain.Entity.Message;
 using BackendTrackerInfrastructure.Persistence.Context;
