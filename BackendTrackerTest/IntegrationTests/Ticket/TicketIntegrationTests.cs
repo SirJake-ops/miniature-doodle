@@ -68,7 +68,7 @@ public class TicketIntegrationTests(BackendTrackerFactory<Program> factory, ITes
         Assert.All(tickets, ticket => Assert.Equal(_user.Id, ticket.SubmitterId));
     }
     
-    [Fact(Skip = "Fix the test below, seems like the test fails when trying to save the ticket to the database,everything up to the save works fine.")]
+    [Fact]
     public async Task CreateTicket_ShouldCreateAndReturnATicketResponse()
     {
         _client.DefaultRequestHeaders.Authorization =

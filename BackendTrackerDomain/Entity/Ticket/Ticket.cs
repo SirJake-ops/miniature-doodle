@@ -9,9 +9,9 @@ public class Ticket : BaseEntity
 {
     public required Guid TicketId { get; set; }
     [ForeignKey(nameof(Submitter))] public required Guid SubmitterId { get; set; }
-    public required ApplicationUser.ApplicationUser Submitter { get; set; } = null!;
+    public  ApplicationUser.ApplicationUser? Submitter { get; set; } = null!;
 
-    public required ApplicationUser.ApplicationUser? Assignee { get; set; } = null!;
+    public  ApplicationUser.ApplicationUser? Assignee { get; set; } = null!;
     [ForeignKey(nameof(Assignee))] public required Guid? AssigneeId { get; set; }
 
     public required Environment Environment { get; set; }

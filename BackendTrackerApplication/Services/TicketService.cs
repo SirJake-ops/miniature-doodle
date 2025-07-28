@@ -49,7 +49,6 @@ public class TicketService(
             UpdatedAt = DateTime.UtcNow,
             Files = request.Files ?? new List<TicketFile>(),
             IsResolved = false,
-            Submitter = user,
             Assignee = null,
             AssigneeId = null
         };
