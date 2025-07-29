@@ -1,8 +1,8 @@
 ﻿using BackendTracker.Ticket.NewFolder;
 using BackendTrackerApplication.DTOs;
 using BackendTrackerApplication.Exceptions;
+using BackendTrackerApplication.Services.Messaging;
 using BackendTrackerDomain.Entity.Ticket;
-using BackendTrackerDomain.Entity.Ticket.FileUpload;
 using BackendTrackerDomain.Interfaces;
 using Microsoft.Extensions.Logging;
 
@@ -11,6 +11,7 @@ namespace BackendTrackerApplication.Services;
 public class TicketService(
     ITicketRepository _ticketRepository,
     IApplicationUserRepository _applicationUserRepository,
+    IMessageService messageService,
     ILogger<TicketService> logger)
 {
     public async Task<IEnumerable<Ticket>> GetTickets(Guid submitterId)
@@ -47,12 +48,13 @@ public class TicketService(
             SubmitterId = request.SubmitterId,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow,
-            Files = request.Files ?? new List<TicketFile>(),
+            Files = request.Files,
             IsResolved = false,
             AssigneeId = null
         };
 
         var createdTicket = await _ticketRepository.CreateTicket(ticket);
+        await messageService.NotifyTicketCreated(createdTicket);
         return new TicketResponse
         {
             TicketId = createdTicket.TicketId,
@@ -90,7 +92,7 @@ public class TicketService(
             SubmitterId = request.SubmitterId,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow,
-            Files = request.Files ?? new List<TicketFile>(),
+            Files = request.Files,
             IsResolved = false,
             Submitter = null,
             Assignee = null,
@@ -133,48 +135,6 @@ public class TicketService(
             SubmitterId = deletedTicket.SubmitterId,
             CreatedAt = deletedTicket.CreatedAt
         };
-    }
-
-    private static object? ConvertValue(object value, Type targetType)
-    {
-        if (value == null)
-            return null;
-
-
-        var underlyingType = Nullable.GetUnderlyingType(targetType) ?? targetType;
-
-        try
-        {
-            if (underlyingType.IsEnum)
-            {
-                if (value is string str)
-                    return Enum.Parse(underlyingType, str, ignoreCase: true);
-                else
-                    return Enum.ToObject(underlyingType, value);
-            }
-
-            if (underlyingType == typeof(Guid))
-            {
-                if (value is string str)
-                    return Guid.Parse(str);
-                if (value is Guid g)
-                    return g;
-            }
-
-            if (underlyingType == typeof(DateTime))
-            {
-                if (value is string str)
-                    return DateTime.Parse(str);
-                if (value is DateTime dt)
-                    return dt;
-            }
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException($"Failed to convert value '{value}' to type '{targetType.Name}'", ex);
-        }
-
-        return Convert.ChangeType(value, underlyingType);
     }
 
     public async Task<TicketResponse> AssignTicketToUser(Guid userId, Guid ticketId)

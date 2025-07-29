@@ -24,7 +24,7 @@ public class ApplicationUserService(IDbContextFactory<ApplicationContext> _conte
             user.UserName == loginRequest.UserName) ?? throw new AuthenticationException("User not found.");
 
         var hasher = new PasswordHasher<ApplicationUser>();
-        var result = hasher.VerifyHashedPassword(user, user.Password!, loginRequest.Password);
+        var result = hasher.VerifyHashedPassword(user, user.Password!, loginRequest.Password ?? throw new AuthenticationException("Password is required."));
         if (result == PasswordVerificationResult.Failed) throw new AuthenticationException("Invalid password."); 
 
         var token = GenerateJwtToken(user);

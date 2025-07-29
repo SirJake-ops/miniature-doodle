@@ -92,7 +92,7 @@ public class QueryTest : IClassFixture<QueryTestFixture>
     }
 
     [Fact]
-    public async void GetConversation_ShouldReturnSingleConversation()
+    public async Task GetConversation_ShouldReturnSingleConversation()
     {
         var query = new Query(_contextFactory);
         var conversationId = Guid.Parse("11111111-1111-1111-1111-111111111111");
@@ -107,7 +107,7 @@ public class QueryTest : IClassFixture<QueryTestFixture>
     }
 
     [Fact]
-    public async void GetMessages_ShouldReturnMessagesForUser()
+    public async Task GetMessages_ShouldReturnMessagesForUser()
     {
         var query = new Query(_contextFactory);
         var userId = Guid.Parse("11111111-1111-1111-1111-111111111111");
