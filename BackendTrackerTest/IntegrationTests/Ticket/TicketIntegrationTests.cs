@@ -1,23 +1,22 @@
-﻿using BackendTracker.Auth;
+﻿using System.Net;
+using System.Net.Http.Headers;
+using System.Net.Http.Json;
+using BackendTracker.Auth;
 using BackendTracker.Ticket.NewFolder;
 using BackendTracker.Ticket.PayloadAndResponse;
-using BackendTrackerDomain.Entity.ApplicationUser;
+using BackendTrackerApplication.Dtos;
+using BackendTrackerApplication.DTOs;
 using BackendTrackerDomain.Entity.Ticket.FileUpload;
+using BackendTrackerInfrastructure.Persistence.Context;
+using BackendTrackerPresentation;
 using BackendTrackerTest.IntegrationTests.IntegrationTestSetup;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System.Net;
-using System.Net.Http.Json;
-using BackendTrackerApplication.Dtos;
-using BackendTrackerApplication.DTOs;
-using BackendTrackerInfrastructure.Persistence.Context;
-using BackendTrackerPresentation;
-using Xunit.Abstractions;
 using Environment = BackendTracker.Ticket.Enums.Environment;
 
 namespace BackendTrackerTest.IntegrationTests.Ticket;
 
-public class TicketIntegrationTests(BackendTrackerFactory<Program> factory, ITestOutputHelper testOutputHelper)
+public class TicketIntegrationTests(BackendTrackerFactory<Program> factory)
     : IClassFixture<BackendTrackerFactory<Program>>, IAsyncLifetime
 {
     private readonly HttpClient _client = factory.CreateClient();
@@ -54,12 +53,12 @@ public class TicketIntegrationTests(BackendTrackerFactory<Program> factory, ITes
     public async Task GetTickets_ShouldReturnTicketsForSubmitter()
     {
         _client.DefaultRequestHeaders.Authorization =
-            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+            new AuthenticationHeaderValue("Bearer", _token);
 
         var response = await _client.GetAsync($"/api/tickets?submitterId={_user.Id}");
 
-        var body = response.Content.ReadAsStringAsync().Result;
-        testOutputHelper.WriteLine(body);
+        var body = await response.Content.ReadAsStringAsync();
+        Assert.NotNull(body);
 
         response.EnsureSuccessStatusCode();
 
@@ -72,7 +71,7 @@ public class TicketIntegrationTests(BackendTrackerFactory<Program> factory, ITes
     public async Task CreateTicket_ShouldCreateAndReturnATicketResponse()
     {
         _client.DefaultRequestHeaders.Authorization =
-            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+            new AuthenticationHeaderValue("Bearer", _token);
     
         var response = await _client.PostAsJsonAsync("/api/tickets", new TicketRequestBody
         {
@@ -100,13 +99,15 @@ public class TicketIntegrationTests(BackendTrackerFactory<Program> factory, ITes
     public async Task DeleteTicket_ShouldBeAbleToDelete()
     {
         _client.DefaultRequestHeaders.Authorization =
-            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+            new AuthenticationHeaderValue("Bearer", _token);
 
 
         var response = await _client.GetAsync($"/api/tickets?submitterId={_user.Id}");
 
         var tickets = await response.Content.ReadFromJsonAsync<List<BackendTrackerDomain.Entity.Ticket.Ticket>>();
+        
         Guid ticketIdToDelete = tickets.FirstOrDefault().TicketId;
+        Assert.NotEqual(Guid.Empty, ticketIdToDelete);
 
 
         var ticketDeleteResponse = await _client.DeleteAsync($"/api/tickets/{ticketIdToDelete}");
@@ -118,7 +119,7 @@ public class TicketIntegrationTests(BackendTrackerFactory<Program> factory, ITes
     public async Task AssignTicketToUser_ShouldAssignTicketToUser()
     {
         _client.DefaultRequestHeaders.Authorization =
-            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+            new AuthenticationHeaderValue("Bearer", _token);
     
         var response = await _client.GetAsync($"/api/tickets?submitterId={_user.Id}");
     
@@ -143,7 +144,7 @@ public class TicketIntegrationTests(BackendTrackerFactory<Program> factory, ITes
             .FirstOrDefaultAsync(u => u.Id == _user.Id);
     
     
-        Assert.Equal(1, updatedUser!.AssignedTickets.Count);
+        Assert.Single(updatedUser!.AssignedTickets);
         Assert.NotNull(assignedTicket);
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }

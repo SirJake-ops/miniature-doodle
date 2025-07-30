@@ -2,6 +2,7 @@ using System.Text;
 using BackendTracker.Entities.Message;
 using BackendTrackerApplication.Interfaces;
 using BackendTrackerApplication.Services;
+using BackendTrackerApplication.Services.Messaging;
 using BackendTrackerDomain.Entity.Message;
 using BackendTrackerDomain.Interfaces;
 using BackendTrackerInfrastructure.Persistence.Context;
@@ -56,6 +57,8 @@ public class Program
             });
 
         builder.Services.AddControllers();
+        builder.Services.AddSignalR();
+        builder.Services.AddScoped<IMessageService, MessageService>();
         builder.Services.AddControllers().AddNewtonsoftJson();
         builder.Services.AddAuthorization();
 
@@ -66,6 +69,7 @@ public class Program
         app.UseAuthentication();
         app.UseAuthorization();
         app.MapGraphQL();
+        app.MapHub<MessageHub>("/messageHub");
 
         app.Run();
     }

@@ -8,6 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using BackendTrackerApplication.Dtos;
+using MailKit.Security;
 using LoginRequest = BackendTracker.Auth.LoginRequest;
 
 namespace BackendTrackerPresentation.Controllers;
@@ -27,7 +28,7 @@ public class AuthController(IDbContextFactory<ApplicationContext> applicationCon
         if (user == null) return Unauthorized("Invalid username.");
 
         var hasher = new PasswordHasher<ApplicationUser>();
-        var result = hasher.VerifyHashedPassword(user, user.Password!, loginRequest.Password);
+        var result = hasher.VerifyHashedPassword(user, user.Password!, loginRequest.Password ?? throw new AuthenticationException("Password is required."));
         if (result == PasswordVerificationResult.Failed) return Unauthorized("Invalid password.");
 
         var token = GenerateJwtToken(user);

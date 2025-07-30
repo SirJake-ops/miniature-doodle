@@ -1,10 +1,12 @@
 ﻿using BackendTracker.Entities.Message;
+using BackendTrackerApplication.Services.Messaging;
 using BackendTrackerDomain.Entity.ApplicationUser;
 using BackendTrackerDomain.Entity.Message;
 using BackendTrackerDomain.Entity.Ticket.FileUpload;
 using BackendTrackerDomain.Interfaces;
 using BackendTrackerInfrastructure.Persistence.Context;
 using BackendTrackerInfrastructure.Repositories;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;

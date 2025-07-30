@@ -64,7 +64,7 @@ public class MutationTest : IClassFixture<MutationTestFixture>
     }
 
     [Fact]
-    public async void CreateUser_ShouldCreateNewUser()
+    public async Task CreateUser_ShouldCreateNewUser()
     {
         var mutation = new Mutation(_contextFactory);
 

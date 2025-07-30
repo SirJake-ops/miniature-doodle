@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BackendTrackerInfrastructure.Repositories;
 
-public class TicketRepository(IDbContextFactory<ApplicationContext> _contextFactory) : ITicketRepository
+public class TicketRepository(IDbContextFactory<ApplicationContext> contextFactory) : ITicketRepository
 {
     public async Task<IEnumerable<Ticket>> GetTickets(Guid submitterId)
     {
-        await using var context = await _contextFactory.CreateDbContextAsync();
+        await using var context = await contextFactory.CreateDbContextAsync();
         return await context.Tickets
             .Where(ticket => ticket.SubmitterId == submitterId)
             .ToListAsync();
@@ -19,14 +19,14 @@ public class TicketRepository(IDbContextFactory<ApplicationContext> _contextFact
 
     public async Task<Ticket?> GetTicketById(Guid ticketId)
     {
-        await using var context = await _contextFactory.CreateDbContextAsync();
+        await using var context = await contextFactory.CreateDbContextAsync();
         return await context.Tickets.FirstOrDefaultAsync(m => m.TicketId == ticketId);
     }
 
     public async Task<Ticket> CreateTicket(
         Ticket ticket)
     {
-        await using var context = await _contextFactory.CreateDbContextAsync();
+        await using var context = await contextFactory.CreateDbContextAsync();
         context.Tickets.Add(ticket);
         await context.SaveChangesAsync();
         return ticket;
@@ -35,7 +35,7 @@ public class TicketRepository(IDbContextFactory<ApplicationContext> _contextFact
     public async Task<Ticket> UpdateTicket(
         Ticket ticket)
     {
-        await using var context = await _contextFactory.CreateDbContextAsync();
+        await using var context = await contextFactory.CreateDbContextAsync();
         context.Tickets.Update(ticket);
         await context.SaveChangesAsync();
         return ticket;
@@ -43,7 +43,7 @@ public class TicketRepository(IDbContextFactory<ApplicationContext> _contextFact
 
     public async Task<Ticket> DeleteAsync(Guid ticketId)
     {
-        await using var context = await _contextFactory.CreateDbContextAsync();
+        await using var context = await contextFactory.CreateDbContextAsync();
 
         var ticket = await context.Tickets.FirstOrDefaultAsync(m => m.TicketId == ticketId) ??
                      throw new TicketExceptions("Ticket not found");
@@ -61,13 +61,13 @@ public class TicketRepository(IDbContextFactory<ApplicationContext> _contextFact
 
     public async Task<bool> UserExistsAsync(Guid userId)
     {
-        await using var context = await _contextFactory.CreateDbContextAsync();
+        await using var context = await contextFactory.CreateDbContextAsync();
         return await context.ApplicationUsers.AnyAsync(u => u.Id == userId);
     }
 
     public Task<Ticket> AssignTicketToUser(Guid userId, Guid ticketId)
     {
-        var context = _contextFactory.CreateDbContextAsync().Result;
+        var context = contextFactory.CreateDbContextAsync().Result;
 
         var ticket = context.Tickets.FirstOrDefault(t => t.TicketId == ticketId) ??
                      throw new TicketExceptions("Ticket not found");
