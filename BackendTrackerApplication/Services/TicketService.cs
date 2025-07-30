@@ -50,7 +50,7 @@ public class TicketService(
             UpdatedAt = DateTime.UtcNow,
             Files = request.Files,
             IsResolved = false,
-            AssigneeId = null
+            AssigneeId = null 
         };
 
         var createdTicket = await _ticketRepository.CreateTicket(ticket);

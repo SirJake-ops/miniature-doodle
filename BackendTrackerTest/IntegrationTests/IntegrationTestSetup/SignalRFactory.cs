@@ -10,17 +10,27 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Moq;
 using Environment = BackendTracker.Ticket.Enums.Environment;
 
 namespace BackendTrackerTest.IntegrationTests.IntegrationTestSetup;
 
 public class SignalRFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
 {
+   public Mock<IHubContext<MessageHub>> MockHubContext { get; set; }
+   public Mock<IClientProxy> MockClientProxy { get; set; }
    protected override void ConfigureWebHost(IWebHostBuilder builder)
    {
+      var MockClientProxy = new Mock<IClientProxy>();
+      MockHubContext = new Mock<IHubContext<MessageHub>>();
+
+      MockHubContext.Setup(x => x.Clients.User(It.IsAny<string>())).Returns(MockClientProxy.Object);
+      MockHubContext.Setup(a => a.Clients.Group(It.IsAny<string>())).Returns(MockClientProxy.Object);
+      
       builder.ConfigureServices(services =>
       {
          var descriptors = services
@@ -30,6 +40,13 @@ public class SignalRFactory<TStartup> : WebApplicationFactory<TStartup> where TS
 
          foreach (var descriptor in descriptors)
             services.Remove(descriptor);
+         
+         var dbConnectionDescriptor = services
+            .Where(d => d.ServiceType.FullName != null &&
+                        d.ServiceType.FullName.Contains("DbConnection")).ToList();
+         
+         foreach (var descriptor in dbConnectionDescriptor)
+            services.Remove(descriptor);
 
          services.RemoveAll<ITicketRepository>();
          services.AddScoped<ITicketRepository, TicketRepository>();
@@ -38,6 +55,8 @@ public class SignalRFactory<TStartup> : WebApplicationFactory<TStartup> where TS
          {
             options.EnableDetailedErrors = true;
          });
+         
+         services.Replace(ServiceDescriptor.Scoped<IHubContext<MessageHub>>(_ => MockHubContext.Object));
 
          services.AddPooledDbContextFactory<ApplicationContext>(options =>
             options.UseInMemoryDatabase("InMemoryDbForTesting"));
@@ -49,19 +68,7 @@ public class SignalRFactory<TStartup> : WebApplicationFactory<TStartup> where TS
          using var db = factory.CreateDbContext();
          db.Database.EnsureCreated();
          SeedData(db);
-      });
-
-      builder.Configure(app =>
-      {
-         app.UseRouting();
-         app.UseAuthentication();
-         app.UseAuthorization();
-         app.UseEndpoints(endpoints =>
-         {
-            endpoints.MapControllers();
-            endpoints.MapGraphQL();
-            endpoints.MapHub<MessageHub>("/messageHub");
-         });
+         
       });
    }
    

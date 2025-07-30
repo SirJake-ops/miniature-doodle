@@ -8,13 +8,26 @@ public class MessageService(IHubContext<MessageHub> hubContext) : IMessageServic
 {
     public async Task NotifyTicketCreated(Ticket ticket)
     {
-        await hubContext.Clients.User(ticket.AssigneeId.ToString()).SendAsync("TicketCreated", new
+        if (ticket.AssigneeId.HasValue)
         {
-            Id = ticket.TicketId,
-            Title = ticket.Title,
-            Description = ticket.Description,
-            environment = ticket.Environment
-        });
+            await hubContext.Clients.User(ticket.AssigneeId.ToString()).SendAsync("TicketCreated", new
+            {
+                Id = ticket.TicketId,
+                Title = ticket.Title,
+                Description = ticket.Description,
+                environment = ticket.Environment
+            });
+        }
+        else
+        {
+            await hubContext.Clients.Group("Admins").SendAsync("UnassignedTicketCreated", new
+            {
+                Id = ticket.TicketId,
+                Title = ticket.Title,
+                Description = ticket.Description,
+                environment = ticket.Environment
+            });
+        }
     }
 
     public async Task NotifyTicketUpdated(Ticket ticket)
