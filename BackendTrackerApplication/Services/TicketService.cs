@@ -69,7 +69,7 @@ public class TicketService(
         };
     }
 
-    public async Task<TicketResponse> UpdateTicket(TicketRequestBody request)
+    public async Task<TicketResponse> UpdateTicket(Guid ticketId, TicketRequestBody request)
     {
         if (request.SubmitterId == Guid.Empty)
             throw new ArgumentException("Submitter ID is required");
@@ -80,10 +80,15 @@ public class TicketService(
         var userExists = await _ticketRepository.UserExistsAsync(request.SubmitterId);
         if (!userExists)
             throw new UserNotFoundException(request.SubmitterId, new Dictionary<string, string[]>());
+        
+        var existingTicket = await _ticketRepository.GetTicketById(ticketId);
+        if (existingTicket == null)
+            throw new TicketExceptions("Ticket not found with id: " + ticketId);
+        
 
         var ticket = new Ticket
         {
-            TicketId = Guid.NewGuid(),
+            TicketId = existingTicket.TicketId,
             Environment = request.Environment,
             Title = request.Title,
             Description = request.Description,
@@ -100,6 +105,7 @@ public class TicketService(
         };
 
         var createdTicket = await _ticketRepository.UpdateTicket(ticket);
+        await messageService.NotifyTicketUpdated(createdTicket);
         return new TicketResponse
         {
             TicketId = createdTicket.TicketId,

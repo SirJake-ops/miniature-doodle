@@ -148,4 +148,36 @@ public class TicketIntegrationTests(BackendTrackerFactory<Program> factory)
         Assert.NotNull(assignedTicket);
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
+    
+    [Fact]
+    public async Task UpdateTicket_ShouldUpdateTicket()
+    {
+        _client.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue("Bearer", _token);
+
+        var response = await _client.GetAsync($"/api/tickets?submitterId={_user.Id}");
+
+        var tickets = await response.Content.ReadFromJsonAsync<List<BackendTrackerDomain.Entity.Ticket.Ticket>>();
+
+        Guid ticketIdToUpdate = tickets!.First().TicketId;
+
+        var updateResponse = await _client.PutAsJsonAsync($"/api/tickets/{ticketIdToUpdate}", new TicketRequestBody
+        {
+            Environment = Environment.Browser,
+            Title = "Updated Test Ticket",
+            Description = "This is an updated test ticket.",
+            SubmitterId = _user.Id,
+            StepsToReproduce = "1. Do this\n2. Do that",
+            ExpectedResult = "Expected outcome",
+            Files = new List<TicketFile>(),
+            IsResolved = false
+        });
+
+        updateResponse.EnsureSuccessStatusCode();
+
+        var updatedTicket = await updateResponse.Content.ReadFromJsonAsync<TicketResponse>();
+
+        Assert.NotNull(updatedTicket);
+        Assert.Equal("Updated Test Ticket", updatedTicket.Title);
+    }
 }

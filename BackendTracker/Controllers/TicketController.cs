@@ -27,11 +27,12 @@ public class TicketController(TicketService ticketService) : Controller
         return await ticketService.CreateTicket(ticketBody);
     }
 
-    [HttpPut]
+    [HttpPut("{ticketId}")]
     [Authorize]
-    public async Task<TicketResponse> UpdateTicket([FromBody] TicketRequestBody ticketBody)
+    public async Task<IActionResult> UpdateTicket(Guid ticketId, [FromBody] TicketRequestBody ticketBody)
     {
-        return await ticketService.UpdateTicket(ticketBody);
+        var updatedTicket =  await ticketService.UpdateTicket(ticketId, ticketBody);
+        return Ok(updatedTicket);
     }
 
     [HttpDelete("{ticketId}")]

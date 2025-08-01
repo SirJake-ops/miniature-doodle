@@ -32,13 +32,34 @@ public class MessageService(IHubContext<MessageHub> hubContext) : IMessageServic
 
     public async Task NotifyTicketUpdated(Ticket ticket)
     {
-        await hubContext.Clients.All.SendAsync("TicketUpdated", new
+        if (ticket.AssigneeId.HasValue)
         {
-            Id = ticket.TicketId,
-            Title = ticket.Title,
-            Description = ticket.Description,
-            environment = ticket.Environment
-        });
+            await hubContext.Clients.User(ticket.SubmitterId.ToString()).SendAsync("TicketUpdated", new
+            {
+                Id = ticket.TicketId,
+                Title = ticket.Title,
+                Description = ticket.Description,
+                environment = ticket.Environment
+            });
+            
+            await hubContext.Clients.Group("Admins").SendAsync("TicketUpdated", new
+            {
+                Id = ticket.TicketId,
+                Title = ticket.Title,
+                Description = ticket.Description,
+                environment = ticket.Environment
+            });
+        }
+        else
+        {
+            await hubContext.Clients.Group("Admins").SendAsync("TicketUpdated", new
+            {
+                Id = ticket.TicketId,
+                Title = ticket.Title,
+                Description = ticket.Description,
+                environment = ticket.Environment
+            });
+        }
     }
 
     public Task NotifyTicketAssigned(Ticket ticket, Guid assigneeId)
