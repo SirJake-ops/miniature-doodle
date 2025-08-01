@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackendTrackerInfrastructur
 		{FBBF2F06-6B9A-431D-B756-2F62A762D8A7} = {FBBF2F06-6B9A-431D-B756-2F62A762D8A7}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackendTrackerMAUI", "BackendTrackerMAUI\BackendTrackerMAUI.csproj", "{7F01F64F-ABBD-4B17-8B5E-EB5C1D9EF629}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{5D2497DD-958B-4410-900D-52DEA0CB135B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D2497DD-958B-4410-900D-52DEA0CB135B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D2497DD-958B-4410-900D-52DEA0CB135B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F01F64F-ABBD-4B17-8B5E-EB5C1D9EF629}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F01F64F-ABBD-4B17-8B5E-EB5C1D9EF629}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F01F64F-ABBD-4B17-8B5E-EB5C1D9EF629}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F01F64F-ABBD-4B17-8B5E-EB5C1D9EF629}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
