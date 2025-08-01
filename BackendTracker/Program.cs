@@ -1,10 +1,12 @@
 using System.Text;
 using BackendTracker.Entities.Message;
 using BackendTrackerApplication.Interfaces;
+using BackendTrackerApplication.Mapping.MappingProfiles;
 using BackendTrackerApplication.Services;
 using BackendTrackerApplication.Services.Messaging;
 using BackendTrackerDomain.Entity.Message;
 using BackendTrackerDomain.Interfaces;
+using BackendTrackerInfrastructure.Authentication;
 using BackendTrackerInfrastructure.Persistence.Context;
 using BackendTrackerInfrastructure.Repositories;
 using BackendTrackerPresentation.Graphql;
@@ -61,6 +63,11 @@ public class Program
         builder.Services.AddScoped<IMessageService, MessageService>();
         builder.Services.AddControllers().AddNewtonsoftJson();
         builder.Services.AddAuthorization();
+        builder.Services.AddAutoMapper(config =>
+        {
+            config.AddProfile(new ApplicationUserMappingProfile());
+            config.AddProfile(new TicketMappingProfile());
+        });
 
 
         var app = builder.Build();

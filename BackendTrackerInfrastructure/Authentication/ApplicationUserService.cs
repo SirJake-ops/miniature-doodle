@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-namespace BackendTrackerApplication.Services;
+namespace BackendTrackerInfrastructure.Authentication;
 
 public class ApplicationUserService(IDbContextFactory<ApplicationContext> _context, IConfiguration configuration) : IApplicationUserService
 {

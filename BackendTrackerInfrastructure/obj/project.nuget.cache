@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "/3Fr9rUBPus=",
+  "dgSpecHash": "QUyVCY/0zCc=",
   "success": true,
   "projectFilePath": "C:\\Users\\jake2\\RiderProjects\\BackendTracker\\BackendTrackerInfrastructure\\BackendTrackerInfrastructure.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\jake2\\.nuget\\packages\\automapper\\15.0.1\\automapper.15.0.1.nupkg.sha512",
     "C:\\Users\\jake2\\.nuget\\packages\\dotnetenv\\3.1.1\\dotnetenv.3.1.1.nupkg.sha512",
     "C:\\Users\\jake2\\.nuget\\packages\\fluentvalidation\\12.0.0\\fluentvalidation.12.0.0.nupkg.sha512",
     "C:\\Users\\jake2\\.nuget\\packages\\greendonut\\15.1.7\\greendonut.15.1.7.nupkg.sha512",
