@@ -4,6 +4,7 @@ using BackendTrackerApplication.Interfaces;
 using BackendTrackerApplication.Mapping.MappingProfiles;
 using BackendTrackerApplication.Services;
 using BackendTrackerApplication.Services.Messaging;
+using BackendTrackerApplication.Services.Ticket;
 using BackendTrackerDomain.Entity.Message;
 using BackendTrackerDomain.Interfaces;
 using BackendTrackerInfrastructure.Authentication;
