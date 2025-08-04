@@ -2,6 +2,7 @@
 using BackendTracker.Ticket.PayloadAndResponse;
 using BackendTrackerApplication.DTOs;
 using BackendTrackerApplication.Services;
+using BackendTrackerApplication.Services.Ticket;
 using BackendTrackerPresentation.Graphql.Subscriptions;
 using HotChocolate.Subscriptions;
 using Microsoft.AspNetCore.Authorization;
