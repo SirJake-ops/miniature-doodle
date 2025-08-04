@@ -10,7 +10,5 @@ public class TicketMappingProfile : Profile
    public TicketMappingProfile()
    {
       CreateMap<Ticket, TicketResponse>();
-      CreateMap<TicketResponse, Ticket>();
-      CreateMap<TicketRequestBody, Ticket>();
    } 
 }

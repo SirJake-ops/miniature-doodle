@@ -1,4 +1,6 @@
-﻿using BackendTracker.Entities.Message;
+﻿using AutoMapper;
+using BackendTracker.Entities.Message;
+using BackendTrackerApplication.Dtos;
 using BackendTrackerDomain.Entity.ApplicationUser;
 using BackendTrackerDomain.Entity.Message;
 using BackendTrackerInfrastructure.Persistence.Context;
@@ -11,9 +13,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BackendTrackerPresentation.Graphql;
 
-public class Mutation(IDbContextFactory<ApplicationContext> dbContextFactory)
+public class Mutation(IDbContextFactory<ApplicationContext> dbContextFactory, IMapper mapper)
 {
-    public async Task<ApplicationUser?> CreateUser(ApplicationUserInput user)
+    public async Task<ApplicationUserDto?> CreateUser(ApplicationUserInput user)
     {
         await using var context = await dbContextFactory.CreateDbContextAsync();
         try
@@ -40,7 +42,8 @@ public class Mutation(IDbContextFactory<ApplicationContext> dbContextFactory)
 
             context.ApplicationUsers.Add(applicationUser);
             await context.SaveChangesAsync();
-            return applicationUser;
+            var createdUser = mapper.Map<ApplicationUserDto>(applicationUser);
+            return createdUser;
         }
         catch (Exception e)
         {

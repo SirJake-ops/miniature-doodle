@@ -9,6 +9,11 @@ namespace BackendTrackerInfrastructure.Repositories;
 
 public class ApplicationUserRepository(IDbContextFactory<ApplicationContext> _context) : IApplicationUserRepository
 {
+    public Task<ApplicationUser> GetUserById(Guid userId)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<IEnumerable<ApplicationUser>> GetUsersAsync()
     {
         await using var context = await _context.CreateDbContextAsync();

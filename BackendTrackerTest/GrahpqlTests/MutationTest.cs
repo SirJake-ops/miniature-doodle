@@ -1,13 +1,15 @@
-﻿using BackendTracker.Entities.Message;
+﻿using AutoMapper;
+using BackendTracker.Entities.Message;
+using BackendTrackerApplication.Mapping.MappingProfiles;
 using BackendTrackerDomain.Entity.ApplicationUser;
 using BackendTrackerDomain.Entity.Message;
 using BackendTrackerInfrastructure.Persistence.Context;
-using BackendTrackerPresentation.Exceptions;
 using BackendTrackerPresentation.Graphql;
 using BackendTrackerPresentation.Graphql.GraphqlTypes;
 using HotChocolate.Subscriptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Moq;
 
 namespace BackendTrackerTest.GrahpqlTests;
@@ -15,6 +17,8 @@ namespace BackendTrackerTest.GrahpqlTests;
 public class MutationTestFixture : IDisposable
 {
     public readonly IDbContextFactory<ApplicationContext> ContextFactory;
+    public readonly IMapper Mapper;
+    public readonly ServiceProvider ServiceProvider;
 
     public MutationTestFixture()
     {
@@ -25,7 +29,17 @@ public class MutationTestFixture : IDisposable
             options.UseInMemoryDatabase("GraphqlTestDb" + Guid.NewGuid());
         });
 
-        ContextFactory = services.BuildServiceProvider().GetRequiredService<IDbContextFactory<ApplicationContext>>();
+        var configurations = new MapperConfiguration(config =>
+        {
+            config.AddProfile<ApplicationUserMappingProfile>();
+            config.AddProfile<TicketMappingProfile>();
+        }, new LoggerFactory());
+
+        services.AddSingleton<IMapper>(new Mapper(configurations));
+        ServiceProvider = services.BuildServiceProvider();
+
+        ContextFactory = ServiceProvider.GetRequiredService<IDbContextFactory<ApplicationContext>>();
+        Mapper = ServiceProvider.GetRequiredService<IMapper>();
 
         SeedTestData();
     }
@@ -34,6 +48,7 @@ public class MutationTestFixture : IDisposable
     {
         using var context = ContextFactory.CreateDbContext();
         context.Database.EnsureDeleted();
+        ServiceProvider?.Dispose();
     }
 
     private void SeedTestData()
@@ -54,19 +69,15 @@ public class MutationTestFixture : IDisposable
     }
 }
 
-public class MutationTest : IClassFixture<MutationTestFixture>
+public class MutationTest(MutationTestFixture fixture) : IClassFixture<MutationTestFixture>
 {
-    private readonly IDbContextFactory<ApplicationContext> _contextFactory;
-
-    public MutationTest(MutationTestFixture fixture)
-    {
-        _contextFactory = fixture.ContextFactory;
-    }
+    private readonly IDbContextFactory<ApplicationContext> _contextFactory = fixture.ContextFactory;
+    private readonly IMapper _mapper = fixture.Mapper;
 
     [Fact]
     public async Task CreateUser_ShouldCreateNewUser()
     {
-        var mutation = new Mutation(_contextFactory);
+        var mutation = new Mutation(_contextFactory, _mapper);
 
         var newUser = new ApplicationUserInput
         {
@@ -106,7 +117,7 @@ public class MutationTest : IClassFixture<MutationTestFixture>
 
         Assert.NotNull(newMessage);
 
-        var mutation = new Mutation(_contextFactory);
+        var mutation = new Mutation(_contextFactory, _mapper);
         var sender = new Mock<ITopicEventSender>();
 
         var createdMessage = await mutation.AddMessage(newMessage, sender.Object);
@@ -137,7 +148,7 @@ public class MutationTest : IClassFixture<MutationTestFixture>
             LastMessageTime = DateTime.UtcNow
         };
 
-        var mutation = new Mutation(_contextFactory);
+        var mutation = new Mutation(_contextFactory, _mapper);
         var sender = new Mock<ITopicEventSender>();
 
         var createdConversation = await mutation.AddConversation(conversation, sender.Object);
