@@ -1,12 +1,11 @@
-﻿using BackendTrackerDomain.Entity.Message;
-using BackendTrackerDomain.Entity.Ticket;
+﻿using BackendTrackerApplication.Dtos;
 
 namespace BackendTrackerApplication.Services.Messaging;
 
 public interface IMessageService
 {
-    Task NotifyTicketCreated(Ticket ticket);
-    Task NotifyTicketUpdated(Ticket ticket);
-    Task NotifyTicketAssigned(Ticket ticket, Guid assigneeId);
-    Task SendAsync(Message message);
+    Task NotifyTicketCreated(BackendTrackerDomain.Entity.Ticket.Ticket ticket);
+    Task NotifyTicketUpdated(BackendTrackerDomain.Entity.Ticket.Ticket ticket);
+    Task NotifyTicketAssigned(BackendTrackerDomain.Entity.Ticket.Ticket ticket, Guid assigneeId);
+    Task SendAsync(MessageDto message);
 }
