@@ -59,8 +59,8 @@ The project follows **Clean Architecture** principles with clear separation of c
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/SirJake-ops/bookish-chainsaw.git
-   cd bookish-chainsaw
+   git clone https://github.com/SirJake-ops/miniature-doodle.git
+   cd miniature-doodle
    ```
 
 2. **Start the database**
@@ -246,3 +246,4 @@ For internal support and questions:
 ---
 
 **Built with ❤️ for internal team productivity**
+
