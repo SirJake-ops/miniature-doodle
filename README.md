@@ -4,7 +4,7 @@ A comprehensive ticket management system designed for internal team use, featuri
 
 ## 🎯 Overview
 
-BackendTracker is a CRUD-based ticket management system that allows users to create, manage, and discuss tickets through multiple channels. The system supports both traditional form-based ticket creation and automated ticket generation from email submissions. What sets it apart is the integrated real-time messaging system that enables direct communication between ticket submitters and assignees. Previous iteration of the project is here [https://github.com/SirJake-ops/bookish-chainsaw](found here).
+BackendTracker is a CRUD-based ticket management system that allows users to create, manage, and discuss tickets through multiple channels. The system supports both traditional form-based ticket creation and automated ticket generation from email submissions. What sets it apart is the integrated real-time messaging system that enables direct communication between ticket submitters and assignees. Previous iteration of the project is here [Found here](https://github.com/SirJake-ops/bookish-chainsaw).
 
 ## ✨ Key Features
 
@@ -246,5 +246,6 @@ For internal support and questions:
 ---
 
 **Built with ❤️ for internal team productivity**
+
 
 
