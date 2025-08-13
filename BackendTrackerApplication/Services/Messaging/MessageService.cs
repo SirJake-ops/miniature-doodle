@@ -1,4 +1,5 @@
-﻿using BackendTrackerDomain.Entity.Message;
+﻿using BackendTrackerApplication.Dtos;
+using BackendTrackerDomain.Entity.Message;
 using BackendTrackerDomain.Entity.Ticket;
 using Microsoft.AspNetCore.SignalR;
 
@@ -6,7 +7,7 @@ namespace BackendTrackerApplication.Services.Messaging;
 
 public class MessageService(IHubContext<MessageHub> hubContext) : IMessageService
 {
-    public async Task NotifyTicketCreated(Ticket ticket)
+    public async Task NotifyTicketCreated(BackendTrackerDomain.Entity.Ticket.Ticket ticket)
     {
         if (ticket.AssigneeId.HasValue)
         {
@@ -30,7 +31,7 @@ public class MessageService(IHubContext<MessageHub> hubContext) : IMessageServic
         }
     }
 
-    public async Task NotifyTicketUpdated(Ticket ticket)
+    public async Task NotifyTicketUpdated(BackendTrackerDomain.Entity.Ticket.Ticket ticket)
     {
         if (ticket.AssigneeId.HasValue)
         {
@@ -62,7 +63,7 @@ public class MessageService(IHubContext<MessageHub> hubContext) : IMessageServic
         }
     }
 
-    public Task NotifyTicketAssigned(Ticket ticket, Guid assigneeId)
+    public Task NotifyTicketAssigned(BackendTrackerDomain.Entity.Ticket.Ticket ticket, Guid assigneeId)
     {
         return hubContext.Clients.User(assigneeId.ToString()).SendAsync("TicketAssigned", new
         {
@@ -73,14 +74,13 @@ public class MessageService(IHubContext<MessageHub> hubContext) : IMessageServic
         });
     }
 
-    public Task SendAsync(Message message)
+    public Task SendAsync(MessageDto message)
     {
         return hubContext.Clients.All.SendAsync("MessageReceived", new
         {
-            Id = message.Id,
             Content = message.Content,
-            SenderId = message.SenderId,
-            Timestamp = message.SentTime
+            SentTime = message.SentTime,
+            isRead = message.IsRead,
         });
     }
 }

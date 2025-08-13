@@ -6,8 +6,12 @@ namespace BackendTrackerPresentation.Graphql.Subscriptions;
 
 public abstract class Subscription
 {
+
     [Subscribe]
     public Message MessageAdded([EventMessage] Message message) => message;
+
+    [Subscribe]
+    public Message MessageDeleted([EventMessage] Message message) => message; 
     
     [Subscribe]
     public Conversation ConversationAdded([EventMessage] Conversation conversation) => conversation;

@@ -2,26 +2,25 @@
 using BackendTrackerApplication.DTOs;
 using BackendTrackerApplication.Exceptions;
 using BackendTrackerApplication.Services.Messaging;
-using BackendTrackerDomain.Entity.Ticket;
 using BackendTrackerDomain.Interfaces;
 using Microsoft.Extensions.Logging;
 
-namespace BackendTrackerApplication.Services;
+namespace BackendTrackerApplication.Services.Ticket;
 
 public class TicketService(
-    ITicketRepository _ticketRepository,
-    IApplicationUserRepository _applicationUserRepository,
+    ITicketRepository ticketRepository,
+    IApplicationUserRepository applicationUserRepository,
     IMessageService messageService,
     ILogger<TicketService> logger)
 {
-    public async Task<IEnumerable<Ticket>> GetTickets(Guid submitterId)
+    public async Task<IEnumerable<BackendTrackerDomain.Entity.Ticket.Ticket>> GetTickets(Guid submitterId)
     {
         if (submitterId == Guid.Empty)
         {
             logger.LogWarning("GetTickets called with an empty id.");
         }
 
-        return await _ticketRepository.GetTickets(submitterId);
+        return await ticketRepository.GetTickets(submitterId);
     }
 
     public async Task<TicketResponse> CreateTicket(TicketRequestBody request)
@@ -30,14 +29,14 @@ public class TicketService(
             throw new ArgumentException("Submitter ID is required");
         if (string.IsNullOrWhiteSpace(request.Title)) throw new ArgumentException("Title is required");
 
-        var userExists = await _ticketRepository.UserExistsAsync(request.SubmitterId);
+        var userExists = await ticketRepository.UserExistsAsync(request.SubmitterId);
         if (!userExists)
             throw new UserNotFoundException(request.SubmitterId.ToString(), new Dictionary<string, string[]>());
 
-        var user = await _applicationUserRepository.GetUserByIdAsync(request.SubmitterId) ??
+        var user = await applicationUserRepository.GetUserByIdAsync(request.SubmitterId) ??
                    throw new UserNotFoundException("User not found", new Dictionary<string, string[]>());
 
-        var ticket = new Ticket
+        var ticket = new BackendTrackerDomain.Entity.Ticket.Ticket
         {
             TicketId = Guid.NewGuid(),
             Environment = request.Environment,
@@ -53,7 +52,7 @@ public class TicketService(
             AssigneeId = null 
         };
 
-        var createdTicket = await _ticketRepository.CreateTicket(ticket);
+        var createdTicket = await ticketRepository.CreateTicket(ticket);
         await messageService.NotifyTicketCreated(createdTicket);
         return new TicketResponse
         {
@@ -77,16 +76,16 @@ public class TicketService(
         if (string.IsNullOrWhiteSpace(request.Title))
             throw new ArgumentException("Title is required");
 
-        var userExists = await _ticketRepository.UserExistsAsync(request.SubmitterId);
+        var userExists = await ticketRepository.UserExistsAsync(request.SubmitterId);
         if (!userExists)
             throw new UserNotFoundException(request.SubmitterId, new Dictionary<string, string[]>());
         
-        var existingTicket = await _ticketRepository.GetTicketById(ticketId);
+        var existingTicket = await ticketRepository.GetTicketById(ticketId);
         if (existingTicket == null)
             throw new TicketExceptions("Ticket not found with id: " + ticketId);
         
 
-        var ticket = new Ticket
+        var ticket = new BackendTrackerDomain.Entity.Ticket.Ticket
         {
             TicketId = existingTicket.TicketId,
             Environment = request.Environment,
@@ -104,7 +103,7 @@ public class TicketService(
             AssigneeId = null
         };
 
-        var createdTicket = await _ticketRepository.UpdateTicket(ticket);
+        var createdTicket = await ticketRepository.UpdateTicket(ticket);
         await messageService.NotifyTicketUpdated(createdTicket);
         return new TicketResponse
         {
@@ -128,7 +127,7 @@ public class TicketService(
             throw new ArgumentException("Ticket ID is required for deletion.");
         }
 
-        var deletedTicket = await _ticketRepository.DeleteAsync(ticketId);
+        var deletedTicket = await ticketRepository.DeleteAsync(ticketId);
 
         return new TicketResponse
         {
@@ -150,13 +149,13 @@ public class TicketService(
             logger.LogWarning("AssignTicketToUser called with an empty user ID or ticket ID.");
         }
 
-        var userExists = await _ticketRepository.UserExistsAsync(userId);
+        var userExists = await ticketRepository.UserExistsAsync(userId);
         if (!userExists)
         {
             logger.LogWarning($"User with ID {userId} does not exist.");
         }
 
-        var ticket = await _ticketRepository.AssignTicketToUser(userId, ticketId);
+        var ticket = await ticketRepository.AssignTicketToUser(userId, ticketId);
 
         return new TicketResponse
         {

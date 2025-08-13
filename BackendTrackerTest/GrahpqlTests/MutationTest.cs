@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BackendTracker.Entities.Message;
 using BackendTrackerApplication.Mapping.MappingProfiles;
+using BackendTrackerApplication.Services.Messaging;
 using BackendTrackerDomain.Entity.ApplicationUser;
 using BackendTrackerDomain.Entity.Message;
 using BackendTrackerInfrastructure.Persistence.Context;
@@ -18,6 +19,7 @@ public class MutationTestFixture : IDisposable
 {
     public readonly IDbContextFactory<ApplicationContext> ContextFactory;
     public readonly IMapper Mapper;
+    public readonly IMessageService MessageService;
     public readonly ServiceProvider ServiceProvider;
 
     public MutationTestFixture()
@@ -29,17 +31,25 @@ public class MutationTestFixture : IDisposable
             options.UseInMemoryDatabase("GraphqlTestDb" + Guid.NewGuid());
         });
 
+        services.AddLogging();
+
         var configurations = new MapperConfiguration(config =>
         {
             config.AddProfile<ApplicationUserMappingProfile>();
             config.AddProfile<TicketMappingProfile>();
+            config.AddProfile<MessageMappingProfile>();
         }, new LoggerFactory());
+        
+        configurations.AssertConfigurationIsValid();
 
+        services.AddSignalR();
         services.AddSingleton<IMapper>(new Mapper(configurations));
+        services.AddScoped<IMessageService, MessageService>();
         ServiceProvider = services.BuildServiceProvider();
 
         ContextFactory = ServiceProvider.GetRequiredService<IDbContextFactory<ApplicationContext>>();
         Mapper = ServiceProvider.GetRequiredService<IMapper>();
+        MessageService = ServiceProvider.GetRequiredService<IMessageService>();
 
         SeedTestData();
     }
@@ -73,11 +83,12 @@ public class MutationTest(MutationTestFixture fixture) : IClassFixture<MutationT
 {
     private readonly IDbContextFactory<ApplicationContext> _contextFactory = fixture.ContextFactory;
     private readonly IMapper _mapper = fixture.Mapper;
+    private readonly IMessageService _messageService = fixture.MessageService;
 
     [Fact]
     public async Task CreateUser_ShouldCreateNewUser()
     {
-        var mutation = new Mutation(_contextFactory, _mapper);
+        var mutation = new Mutation(_contextFactory,_messageService, _mapper);
 
         var newUser = new ApplicationUserInput
         {
@@ -117,7 +128,7 @@ public class MutationTest(MutationTestFixture fixture) : IClassFixture<MutationT
 
         Assert.NotNull(newMessage);
 
-        var mutation = new Mutation(_contextFactory, _mapper);
+        var mutation = new Mutation(_contextFactory, _messageService, _mapper);
         var sender = new Mock<ITopicEventSender>();
 
         var createdMessage = await mutation.AddMessage(newMessage, sender.Object);
@@ -126,6 +137,46 @@ public class MutationTest(MutationTestFixture fixture) : IClassFixture<MutationT
         Assert.Equal(newMessage.Content, createdMessage.Content);
         Assert.Equal(newMessage.SenderId, createdMessage.SenderId);
         Assert.Equal(user.Id, createdMessage.SenderId);
+    }
+
+    [Fact]
+    public async Task DeleteMessage_ShouldDeleteMessage()
+    {
+        var query = new Query(_contextFactory);
+        var user = await query.GetUser(new UserSearchInput
+        {
+            UserName = "TEST_USER",
+            UserEmail = "testEmail@yahoo.com",
+        });
+
+        Assert.NotNull(user);
+
+        var newMessage = new Message
+        {
+            Id = Guid.NewGuid(),
+            Content = "Test message content",
+            SenderId = user!.Id,
+            ReceiverId = Guid.NewGuid(),
+            SentTime = DateTime.UtcNow,
+            IsRead = false
+        };
+
+        Assert.NotNull(newMessage);
+
+        var mutation = new Mutation(_contextFactory, _messageService, _mapper);
+        var sender = new Mock<ITopicEventSender>();
+        
+        var createdMessage = await mutation.AddMessage(newMessage, sender.Object);
+        Assert.NotNull(createdMessage);
+
+        
+        var deletedMessage = await mutation.DeleteMessage(createdMessage, sender.Object);
+        Assert.NotNull(deletedMessage);
+
+        var messages = query.GetMessagesUser(user.Id);
+        Assert.NotNull(messages);
+        
+        Assert.Empty(user.Messages);
     }
 
     [Fact]
@@ -148,7 +199,7 @@ public class MutationTest(MutationTestFixture fixture) : IClassFixture<MutationT
             LastMessageTime = DateTime.UtcNow
         };
 
-        var mutation = new Mutation(_contextFactory, _mapper);
+        var mutation = new Mutation(_contextFactory, _messageService, _mapper);
         var sender = new Mock<ITopicEventSender>();
 
         var createdConversation = await mutation.AddConversation(conversation, sender.Object);
