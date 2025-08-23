@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "BackendTracker\\BackendTrackerPresentation.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "TicketSystemFrontend\\TicketSystemFrontend.esproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
