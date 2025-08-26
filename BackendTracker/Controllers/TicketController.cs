@@ -50,4 +50,10 @@ public class TicketController(TicketService ticketService) : Controller
         var ticketResponse = await ticketService.AssignTicketToUser(userDto.UserId, ticketId);
         return Ok(ticketResponse);
     }
+    
+    [HttpGet("hello")]
+    public String Hello()
+    {
+        return "Hello from TicketController .NET!";
+    }
 }
