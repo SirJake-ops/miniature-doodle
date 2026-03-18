@@ -19,11 +19,11 @@ public class AuthIntegrationTests(BackendTrackerFactory<Program> factory)
             Password = "123abc"
         };
 
-        var response = await _client.PostAsJsonAsync("/api/auth/login", loginRequest);
+        var response = await _client.PostAsJsonAsync("/api/auth/login", loginRequest, cancellationToken: TestContext.Current.CancellationToken);
 
         response.EnsureSuccessStatusCode();
         
-        var responseData = await response.Content.ReadFromJsonAsync<JsonElement>();
+        var responseData = await response.Content.ReadFromJsonAsync<JsonElement>(cancellationToken: TestContext.Current.CancellationToken);
         Assert.True(responseData.TryGetProperty("token", out var token));
         Assert.False(string.IsNullOrWhiteSpace(token.GetString()));
     }

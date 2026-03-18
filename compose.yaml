@@ -12,7 +12,6 @@
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB_NAME: tracker
+      POSTGRES_DB: tracker
     ports:
       - "5432:5432"
-

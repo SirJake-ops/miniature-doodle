@@ -1,0 +1,21 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  backendtracker:
+    build:
+      context: "/home/jake/cs-class-project/miniature-doodle"
+      dockerfile: "BackendTracker/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net10.0/BackendTrackerPresentation.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "backendtracker:dev"
+    ports: []
+    volumes:
+    - "/home/jake/cs-class-project/miniature-doodle/BackendTracker:/app:rw"
+    - "/home/jake/cs-class-project/miniature-doodle:/src:rw"
+    - "/home/jake/.nuget/packages:/home/app/.nuget/packages"
+    working_dir: "/app"

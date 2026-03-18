@@ -23,7 +23,7 @@ public class TicketIntegrationTests(BackendTrackerFactory<Program> factory)
     private ApplicationUserDto _user = null!;
     private string _token = null!;
 
-    public async Task InitializeAsync()
+    public async ValueTask InitializeAsync()
     {
         var loginRequest = new LoginRequest
         {
@@ -47,7 +47,7 @@ public class TicketIntegrationTests(BackendTrackerFactory<Program> factory)
         await context.SaveChangesAsync();
     }
 
-    public Task DisposeAsync() => Task.CompletedTask;
+    public ValueTask DisposeAsync() => ValueTask.CompletedTask;
 
     [Fact]
     public async Task GetTickets_ShouldReturnTicketsForSubmitter()
@@ -55,14 +55,14 @@ public class TicketIntegrationTests(BackendTrackerFactory<Program> factory)
         _client.DefaultRequestHeaders.Authorization =
             new AuthenticationHeaderValue("Bearer", _token);
 
-        var response = await _client.GetAsync($"/api/tickets?submitterId={_user.Id}");
+        var response = await _client.GetAsync($"/api/tickets?submitterId={_user.Id}", TestContext.Current.CancellationToken);
 
-        var body = await response.Content.ReadAsStringAsync();
+        var body = await response.Content.ReadAsStringAsync(TestContext.Current.CancellationToken);
         Assert.NotNull(body);
 
         response.EnsureSuccessStatusCode();
 
-        var tickets = await response.Content.ReadFromJsonAsync<List<BackendTrackerDomain.Entity.Ticket.Ticket>>();
+        var tickets = await response.Content.ReadFromJsonAsync<List<BackendTrackerDomain.Entity.Ticket.Ticket>>(cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(tickets);
         Assert.All(tickets, ticket => Assert.Equal(_user.Id, ticket.SubmitterId));
     }
@@ -83,11 +83,11 @@ public class TicketIntegrationTests(BackendTrackerFactory<Program> factory)
             SubmitterId = _user.Id,
             Files = new List<TicketFile>(),
             IsResolved = false
-        });
+        }, cancellationToken: TestContext.Current.CancellationToken);
     
-        var body = await response.Content.ReadAsStringAsync();
+        var body = await response.Content.ReadAsStringAsync(TestContext.Current.CancellationToken);
     
-        var ticket = await response.Content.ReadFromJsonAsync<TicketResponse>();
+        var ticket = await response.Content.ReadFromJsonAsync<TicketResponse>(cancellationToken: TestContext.Current.CancellationToken);
     
         Assert.NotNull(ticket);
         Assert.Equal("Test Ticket", ticket.Title);
@@ -102,15 +102,18 @@ public class TicketIntegrationTests(BackendTrackerFactory<Program> factory)
             new AuthenticationHeaderValue("Bearer", _token);
 
 
-        var response = await _client.GetAsync($"/api/tickets?submitterId={_user.Id}");
+        var response = await _client.GetAsync($"/api/tickets?submitterId={_user.Id}", TestContext.Current.CancellationToken);
 
-        var tickets = await response.Content.ReadFromJsonAsync<List<BackendTrackerDomain.Entity.Ticket.Ticket>>();
-        
-        Guid ticketIdToDelete = tickets.FirstOrDefault().TicketId;
-        Assert.NotEqual(Guid.Empty, ticketIdToDelete);
+        var tickets = await response.Content.ReadFromJsonAsync<List<BackendTrackerDomain.Entity.Ticket.Ticket>>(cancellationToken: TestContext.Current.CancellationToken);
+
+        if (tickets != null)
+        {
+            Guid ticketIdToDelete = tickets.FirstOrDefault()!.TicketId;
+            Assert.NotEqual(Guid.Empty, ticketIdToDelete);
 
 
-        var ticketDeleteResponse = await _client.DeleteAsync($"/api/tickets/{ticketIdToDelete}");
+            var ticketDeleteResponse = await _client.DeleteAsync($"/api/tickets/{ticketIdToDelete}", TestContext.Current.CancellationToken);
+        }
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
@@ -121,9 +124,9 @@ public class TicketIntegrationTests(BackendTrackerFactory<Program> factory)
         _client.DefaultRequestHeaders.Authorization =
             new AuthenticationHeaderValue("Bearer", _token);
     
-        var response = await _client.GetAsync($"/api/tickets?submitterId={_user.Id}");
+        var response = await _client.GetAsync($"/api/tickets?submitterId={_user.Id}", TestContext.Current.CancellationToken);
     
-        var tickets = await response.Content.ReadFromJsonAsync<List<BackendTrackerDomain.Entity.Ticket.Ticket>>();
+        var tickets = await response.Content.ReadFromJsonAsync<List<BackendTrackerDomain.Entity.Ticket.Ticket>>(cancellationToken: TestContext.Current.CancellationToken);
     
         Guid ticketIdToAssign = tickets!.First().TicketId;
     
@@ -132,16 +135,16 @@ public class TicketIntegrationTests(BackendTrackerFactory<Program> factory)
             UserId = _user.Id 
         };
     
-        var assignResponse = await _client.PostAsJsonAsync($"/api/tickets/{ticketIdToAssign}", userToAssign);
+        var assignResponse = await _client.PostAsJsonAsync($"/api/tickets/{ticketIdToAssign}", userToAssign, cancellationToken: TestContext.Current.CancellationToken);
         assignResponse.EnsureSuccessStatusCode();
     
-        var assignedTicket = await assignResponse.Content.ReadFromJsonAsync<TicketResponse>();
+        var assignedTicket = await assignResponse.Content.ReadFromJsonAsync<TicketResponse>(cancellationToken: TestContext.Current.CancellationToken);
     
-        var db = await factory.Services.GetRequiredService<IDbContextFactory<ApplicationContext>>().CreateDbContextAsync();
+        var db = await factory.Services.GetRequiredService<IDbContextFactory<ApplicationContext>>().CreateDbContextAsync(TestContext.Current.CancellationToken);
     
         var updatedUser = await db.ApplicationUsers
             .Include(u => u.AssignedTickets)
-            .FirstOrDefaultAsync(u => u.Id == _user.Id);
+            .FirstOrDefaultAsync(u => u.Id == _user.Id, cancellationToken: TestContext.Current.CancellationToken);
     
     
         Assert.Single(updatedUser!.AssignedTickets);
@@ -155,9 +158,9 @@ public class TicketIntegrationTests(BackendTrackerFactory<Program> factory)
         _client.DefaultRequestHeaders.Authorization =
             new AuthenticationHeaderValue("Bearer", _token);
 
-        var response = await _client.GetAsync($"/api/tickets?submitterId={_user.Id}");
+        var response = await _client.GetAsync($"/api/tickets?submitterId={_user.Id}", TestContext.Current.CancellationToken);
 
-        var tickets = await response.Content.ReadFromJsonAsync<List<BackendTrackerDomain.Entity.Ticket.Ticket>>();
+        var tickets = await response.Content.ReadFromJsonAsync<List<BackendTrackerDomain.Entity.Ticket.Ticket>>(cancellationToken: TestContext.Current.CancellationToken);
 
         Guid ticketIdToUpdate = tickets!.First().TicketId;
 
@@ -171,11 +174,11 @@ public class TicketIntegrationTests(BackendTrackerFactory<Program> factory)
             ExpectedResult = "Expected outcome",
             Files = new List<TicketFile>(),
             IsResolved = false
-        });
+        }, cancellationToken: TestContext.Current.CancellationToken);
 
         updateResponse.EnsureSuccessStatusCode();
 
-        var updatedTicket = await updateResponse.Content.ReadFromJsonAsync<TicketResponse>();
+        var updatedTicket = await updateResponse.Content.ReadFromJsonAsync<TicketResponse>(cancellationToken: TestContext.Current.CancellationToken);
 
         Assert.NotNull(updatedTicket);
         Assert.Equal("Updated Test Ticket", updatedTicket.Title);

@@ -24,7 +24,7 @@ public class SignalRNotificationTests(SignalRFactory<Program> factory)
     private ApplicationUserDto _user = null!;
     private string _token = null!;
 
-    public async Task InitializeAsync()
+    public async ValueTask InitializeAsync()
     {
         var loginRequest = new LoginRequest
         {
@@ -48,7 +48,7 @@ public class SignalRNotificationTests(SignalRFactory<Program> factory)
         await context.SaveChangesAsync();
     }
 
-    public async Task DisposeAsync() => await Task.CompletedTask;
+    public async ValueTask DisposeAsync() => await Task.CompletedTask;
 
 
     [Fact]
@@ -84,7 +84,7 @@ public class SignalRNotificationTests(SignalRFactory<Program> factory)
             StepsToReproduce = "1. Do this\n2. Do that then do this again but with some more pizzazz",
             ExpectedResult = "Expected result is this the computer will blow up!",
             Files = new List<TicketFile>(),
-        });
+        }, cancellationToken: TestContext.Current.CancellationToken);
 
         response.EnsureSuccessStatusCode();
 
@@ -106,15 +106,14 @@ public class SignalRNotificationTests(SignalRFactory<Program> factory)
             StepsToReproduce = "1. Do this\n2. Do that then do this again but with some more pizzazz",
             ExpectedResult = "Expected result is this the computer will blow up!",
             Files = new List<TicketFile>(),
-        });
+        }, cancellationToken: TestContext.Current.CancellationToken);
 
         response.EnsureSuccessStatusCode();
 
-        var ticketResponse = await response.Content.ReadFromJsonAsync<TicketResponse>();
+        var ticketResponse = await response.Content.ReadFromJsonAsync<TicketResponse>(cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(ticketResponse);
 
-        var updateResponse = await _client.PutAsJsonAsync($"api/tickets/{ticketResponse.TicketId}",
-            new TicketRequestBody
+        var updateResponse = await _client.PutAsJsonAsync($"api/tickets/{ticketResponse.TicketId}", new TicketRequestBody
             {
                 Environment = Environment.Browser,
                 Title = "Updated SignalR Test Ticket",
@@ -123,7 +122,7 @@ public class SignalRNotificationTests(SignalRFactory<Program> factory)
                 StepsToReproduce = "1. Do this\n2. Do that then do this again but with some more pizzazz",
                 ExpectedResult = "Expected result is this the computer will blow up!",
                 Files = new List<TicketFile>(),
-            });
+            }, cancellationToken: TestContext.Current.CancellationToken);
 
         updateResponse.EnsureSuccessStatusCode();
 

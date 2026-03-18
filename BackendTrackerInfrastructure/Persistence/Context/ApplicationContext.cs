@@ -12,16 +12,29 @@ public class ApplicationContext(DbContextOptions<ApplicationContext> options) : 
 {
 #pragma warning restore IL3050
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        if (!optionsBuilder.IsConfigured)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var username = Environment.GetEnvironmentVariable("POSTGRES_USER_DEV");
-            var password = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD_DEV");
-            optionsBuilder.UseNpgsql(
-                $"Host=localhost;Port=5432;Database=tracker;Username={username};Password={password}");
+            if (!optionsBuilder.IsConfigured)
+            {
+                static string? FirstEnv(params string[] keys)
+                {
+                    foreach (var k in keys)
+                    {
+                        var v = Environment.GetEnvironmentVariable(k);
+                        if (!string.IsNullOrWhiteSpace(v)) return v;
+                    }
+                    return null;
+                }
+
+                var pgHost = FirstEnv("POSTGRES_HOST_DEV", "POSTGRES_HOST") ?? "localhost";
+                var pgPort = FirstEnv("POSTGRES_PORT_DEV", "POSTGRES_PORT") ?? "5432";
+                var pgDb = FirstEnv("POSTGRES_DB_NAME_DEV", "POSTGRES_DB_NAME", "POSTGRES_DB") ?? "tracker";
+                var username = FirstEnv("POSTGRES_USERNAME_DEV", "POSTGRES_USER_DEV", "POSTGRES_USER") ?? "postgres";
+                var password = FirstEnv("POSTGRES_PASSWORD_DEV", "POSTGRES_PASSWORD");
+                optionsBuilder.UseNpgsql(
+                    $"Host={pgHost};Port={pgPort};Database={pgDb};Username={username};Password={password}");
+            }
         }
-    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
