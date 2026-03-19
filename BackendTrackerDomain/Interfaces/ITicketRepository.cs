@@ -4,7 +4,9 @@ namespace BackendTrackerDomain.Interfaces;
 
 public interface ITicketRepository
 {
+    Task<IEnumerable<Ticket>> GetAllTickets();
     Task<IEnumerable<Ticket>> GetTickets(Guid submitterId);
+    Task<IEnumerable<Ticket>> GetTicketsForUser(Guid userId);
     Task<Ticket?> GetTicketById(Guid ticketId);
     Task<Ticket> CreateTicket(Ticket ticket);
     Task<Ticket> UpdateTicket(Ticket ticket);

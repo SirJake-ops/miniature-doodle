@@ -6,6 +6,7 @@ using BackendTrackerPresentation.Graphql.Subscriptions;
 using HotChocolate.Subscriptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BackendTrackerPresentation.Controllers;
 
@@ -13,11 +14,34 @@ namespace BackendTrackerPresentation.Controllers;
 [Route("api/tickets")]
 public class TicketController(TicketService ticketService) : Controller
 {
+    [HttpGet("{ticketId:guid}")]
+    [Authorize]
+    public async Task<ActionResult<BackendTrackerDomain.Entity.Ticket.Ticket>> GetTicketById(Guid ticketId)
+    {
+        var idStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (!Guid.TryParse(idStr, out var viewerId)) return Unauthorized();
+
+        var role = User.FindFirstValue(ClaimTypes.Role) ?? string.Empty;
+        var isAdmin = string.Equals(role, "Admin", StringComparison.OrdinalIgnoreCase);
+
+        var ticket = await ticketService.GetTicketById(ticketId);
+        if (ticket == null) return NotFound();
+
+        if (!isAdmin && ticket.SubmitterId != viewerId && ticket.AssigneeId != viewerId) return Forbid();
+
+        return Ok(ticket);
+    }
+
     [HttpGet]
     [Authorize]
-    public async Task<IEnumerable<BackendTrackerDomain.Entity.Ticket.Ticket>> GetTickets([FromQuery] Guid submitterId)
+    public async Task<IEnumerable<BackendTrackerDomain.Entity.Ticket.Ticket>> GetTickets([FromQuery] Guid? submitterId = null)
     {
-        return await ticketService.GetTickets(submitterId);
+        var idStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        Guid.TryParse(idStr, out var viewerId);
+        var role = User.FindFirstValue(ClaimTypes.Role) ?? string.Empty;
+        var isAdmin = string.Equals(role, "Admin", StringComparison.OrdinalIgnoreCase);
+
+        return await ticketService.GetTicketsForViewer(viewerId, isAdmin, submitterId);
     }
 
     [HttpPost]

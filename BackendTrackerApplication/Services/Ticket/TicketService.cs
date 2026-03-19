@@ -14,6 +14,29 @@ public class TicketService(
     IMessageService messageService,
     ILogger<TicketService> logger)
 {
+    public async Task<Ticket?> GetTicketById(Guid ticketId)
+    {
+        return await _ticketRepository.GetTicketById(ticketId);
+    }
+
+    public async Task<IEnumerable<Ticket>> GetTicketsForViewer(Guid viewerId, bool isAdmin, Guid? submitterId = null)
+    {
+        if (isAdmin)
+        {
+            if (submitterId.HasValue && submitterId.Value != Guid.Empty)
+                return await _ticketRepository.GetTickets(submitterId.Value);
+            return await _ticketRepository.GetAllTickets();
+        }
+
+        if (viewerId == Guid.Empty)
+        {
+            logger.LogWarning("GetTicketsForViewer called with an empty viewer id.");
+            return Array.Empty<Ticket>();
+        }
+
+        return await _ticketRepository.GetTicketsForUser(viewerId);
+    }
+
     public async Task<IEnumerable<Ticket>> GetTickets(Guid submitterId)
     {
         if (submitterId == Guid.Empty)

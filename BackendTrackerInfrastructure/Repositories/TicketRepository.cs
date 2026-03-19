@@ -9,11 +9,25 @@ namespace BackendTrackerInfrastructure.Repositories;
 
 public class TicketRepository(IDbContextFactory<ApplicationContext> contextFactory) : ITicketRepository
 {
+    public async Task<IEnumerable<Ticket>> GetAllTickets()
+    {
+        await using var context = await contextFactory.CreateDbContextAsync();
+        return await context.Tickets.ToListAsync();
+    }
+
     public async Task<IEnumerable<Ticket>> GetTickets(Guid submitterId)
     {
         await using var context = await contextFactory.CreateDbContextAsync();
         return await context.Tickets
             .Where(ticket => ticket.SubmitterId == submitterId)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Ticket>> GetTicketsForUser(Guid userId)
+    {
+        await using var context = await contextFactory.CreateDbContextAsync();
+        return await context.Tickets
+            .Where(ticket => ticket.SubmitterId == userId || ticket.AssigneeId == userId)
             .ToListAsync();
     }
 
