@@ -9,9 +9,15 @@
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AIHubCallerClients_00601_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2025_002E1_003Fresharper_002Dhost_003FDecompilerCache_003Fdecompiler_003Fdedfbf3ddcd4472eb5b7c5594fd1c00582908_003F01_003F6efb008b_003FIHubCallerClients_00601_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ALayoutComponentBase_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2025_002E1_003Fresharper_002Dhost_003FSourcesCache_003F327f875fd92c358a2c6b3c48cc81b288070ecb997371cd17419f80a482a617_003FLayoutComponentBase_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AServiceProviderServiceExtensions_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2025_002E1_003Fresharper_002Dhost_003FSourcesCache_003F621526284d3e4868b98948aff942206525763e57e194a27623b66c384466_003FServiceProviderServiceExtensions_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=58c50bc4_002Df385_002D4292_002Db247_002D552fafd2929f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="SignalRNotificationTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;Project Location="C:\Users\jake2\RiderProjects\BackendTracker\BackendTrackerTest" Presentation="&amp;lt;BackendTrackerTest&amp;gt;" /&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=58c50bc4_002Df385_002D4292_002Db247_002D552fafd2929f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="SignalRNotificationTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;Project Location="/home/jake/cs-class-project/miniature-doodle/BackendTrackerTest" Presentation="&amp;lt;BackendTrackerTest&amp;gt;" /&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=9f223c8c_002De4de_002D4efc_002Da861_002Dc58e0bc4555c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="UnitTest1" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;Project Location="C:\Users\jake2\RiderProjects\BackendTracker\BackendTrackerTest" Presentation="&amp;lt;BackendTrackerTest&amp;gt;" /&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=9f223c8c_002De4de_002D4efc_002Da861_002Dc58e0bc4555c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="UnitTest1" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;Or&gt;
+    &lt;ProjectFolder&gt;6C4BADEC-B17E-4149-A9CF-C56710042015/d:GrahpqlTests&lt;/ProjectFolder&gt;
+    &lt;TestAncestor&gt;
+      &lt;TestId&gt;xUnit::6C4BADEC-B17E-4149-A9CF-C56710042015::net10.0::BackendTrackerTest.IntegrationTests.Ticket.TicketIntegrationTests.DeleteTicket_ShouldBeAbleToDelete&lt;/TestId&gt;
+    &lt;/TestAncestor&gt;
+    &lt;ProjectFolder&gt;6C4BADEC-B17E-4149-A9CF-C56710042015/d:IntegrationTests&lt;/ProjectFolder&gt;
+  &lt;/Or&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

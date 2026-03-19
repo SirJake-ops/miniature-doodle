@@ -1,0 +1,13 @@
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerDomain/bin/Debug/net10.0/BackendTrackerDomain.deps.json
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerDomain/bin/Debug/net10.0/BackendTrackerDomain.dll
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerDomain/bin/Debug/net10.0/BackendTrackerDomain.pdb
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerDomain/obj/Debug/net10.0/BackendTrackerDomain.csproj.AssemblyReference.cache
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerDomain/obj/Debug/net10.0/BackendTrackerDomain.GeneratedMSBuildEditorConfig.editorconfig
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerDomain/obj/Debug/net10.0/BackendTrackerDomain.AssemblyInfoInputs.cache
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerDomain/obj/Debug/net10.0/BackendTrackerDomain.AssemblyInfo.cs
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerDomain/obj/Debug/net10.0/BackendTrackerDomain.csproj.CoreCompileInputs.cache
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerDomain/obj/Debug/net10.0/BackendTrackerDomain.sourcelink.json
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerDomain/obj/Debug/net10.0/BackendTrackerDomain.dll
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerDomain/obj/Debug/net10.0/refint/BackendTrackerDomain.dll
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerDomain/obj/Debug/net10.0/BackendTrackerDomain.pdb
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerDomain/obj/Debug/net10.0/ref/BackendTrackerDomain.dll

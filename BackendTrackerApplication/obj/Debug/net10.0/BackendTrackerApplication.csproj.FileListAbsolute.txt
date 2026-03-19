@@ -1,0 +1,16 @@
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerApplication/bin/Debug/net10.0/BackendTrackerApplication.deps.json
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerApplication/bin/Debug/net10.0/BackendTrackerApplication.dll
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerApplication/bin/Debug/net10.0/BackendTrackerApplication.pdb
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerApplication/bin/Debug/net10.0/BackendTrackerDomain.dll
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerApplication/bin/Debug/net10.0/BackendTrackerDomain.pdb
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerApplication/obj/Debug/net10.0/BackendTrackerApplication.csproj.AssemblyReference.cache
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerApplication/obj/Debug/net10.0/BackendTrackerApplication.GeneratedMSBuildEditorConfig.editorconfig
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerApplication/obj/Debug/net10.0/BackendTrackerApplication.AssemblyInfoInputs.cache
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerApplication/obj/Debug/net10.0/BackendTrackerApplication.AssemblyInfo.cs
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerApplication/obj/Debug/net10.0/BackendTrackerApplication.csproj.CoreCompileInputs.cache
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerApplication/obj/Debug/net10.0/BackendTrackerApplication.sourcelink.json
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerApplication/obj/Debug/net10.0/BackendT.4E0F6294.Up2Date
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerApplication/obj/Debug/net10.0/BackendTrackerApplication.dll
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerApplication/obj/Debug/net10.0/refint/BackendTrackerApplication.dll
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerApplication/obj/Debug/net10.0/BackendTrackerApplication.pdb
+/home/jake/cs-class-project/miniature-doodle/BackendTrackerApplication/obj/Debug/net10.0/ref/BackendTrackerApplication.dll
